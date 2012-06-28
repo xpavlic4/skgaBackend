@@ -12,19 +12,6 @@
       <h:form id="reg">
          <h2>Register (Bean Validation example)</h2>
          <p>Enforces annotation-based constraints defined on the model class.</p>
-         <h:panelGrid columns="3" columnClasses="titleCell">
-            <h:outputLabel for="name" value="Name:"/>
-            <h:inputText id="name" value="#{newMember.name}" />
-            <h:message for="name" errorClass="invalid"/>
-
-            <h:outputLabel for="email" value="Email:"/>
-            <h:inputText id="email" value="#{newMember.email}"/>
-            <h:message for="email" errorClass="invalid"/>
-
-            <h:outputLabel for="phoneNumber" value="Phone #:"/>
-            <h:inputText id="phoneNumber" value="#{newMember.phoneNumber}"/>
-            <h:message for="phoneNumber" errorClass="invalid"/>
-         </h:panelGrid>
 
          <p>
             <h:panelGrid columns="2">
@@ -63,10 +50,5 @@
             REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>
          </f:facet>
       </h:dataTable>
-      <h:commandButton action="#{syncJobBean.run}" value="Run" />
-       <h:commandButton action="#{syncJob.fetchSnapshot()}" value="Run2" />
-      
-      <br />
-      <h:outputLabel value="#{test}" />-
    </ui:define>
 </ui:composition>

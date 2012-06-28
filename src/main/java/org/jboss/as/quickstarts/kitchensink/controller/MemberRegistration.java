@@ -2,21 +2,16 @@ package org.jboss.as.quickstarts.kitchensink.controller;
 
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.enterprise.inject.Model;
-import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.transaction.UserTransaction;
-
-import org.jboss.as.quickstarts.kitchensink.model.Member;
 
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.Snapshot;
@@ -47,20 +42,11 @@ public class MemberRegistration {
 	@Resource
 	private UserTransaction utx;
 
-	private Member newMember;
-
-	@Produces
-	@Named
-	public Member getNewMember() {
-		return newMember;
-	}
-
 	public void register() throws Exception {
 		utx.begin();
 		SnapshotRun run = new SnapshotRun();
 		em.persist(run);
 		log.info("Starting scratching...");
-		
 		utx.commit();
 		utx.begin();
 		
@@ -91,8 +77,5 @@ public class MemberRegistration {
 				"Snapshot successful"));
 	}
 
-	@PostConstruct
-	public void initNewMember() {
-		newMember = new Member();
-	}
+
 }
