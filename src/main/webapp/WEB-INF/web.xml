@@ -14,6 +14,10 @@
                   <servlet-name>health</servlet-name>
                   <url-pattern>/health</url-pattern>
          </servlet-mapping>
+         <error-page>
+			<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+			<location>/index.xhtml</location>
+		</error-page>
          
 </web-app>
 

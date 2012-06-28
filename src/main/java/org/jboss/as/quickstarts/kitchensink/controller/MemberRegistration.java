@@ -15,6 +15,10 @@ import javax.persistence.EntityManager;
 
 import org.jboss.as.quickstarts.kitchensink.model.Member;
 
+import com.laurinka.skga.server.model.Result;
+import com.laurinka.skga.server.scratch.HCPChecker;
+import com.laurinka.skga.server.scratch.SkgaGolferNumber;
+
 // The @Stateful annotation eliminates the need for manual transaction demarcation
 @Stateful
 // The @Model stereotype is a convenience mechanism to make this a request-scoped bean that has an
@@ -47,7 +51,8 @@ public class MemberRegistration {
    public void register() throws Exception {
       log.info("Registering " + newMember.getName());
       em.persist(newMember);
-      facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!", "Registration successful"));
+      Result r  = new HCPChecker().query(new SkgaGolferNumber(9811));
+      facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registered!" + r.getName(), "Registration successful"));
       memberEventSrc.fire(newMember);
       initNewMember();
    }
