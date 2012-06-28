@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import com.laurinka.skga.server.model.Result;
@@ -13,6 +14,7 @@ import com.laurinka.skga.server.model.Snapshot;
 import com.laurinka.skga.server.model.SnapshotRun;
 
 @Stateless
+@Named
 public class SyncJob {
 
 	@Inject
