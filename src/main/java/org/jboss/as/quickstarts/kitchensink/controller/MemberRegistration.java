@@ -56,11 +56,14 @@ public class MemberRegistration {
 	}
 
 	public void register() throws Exception {
+		utx.begin();
 		SnapshotRun run = new SnapshotRun();
 		em.persist(run);
 		log.info("Starting scratching...");
-
+		
+		utx.commit();
 		utx.begin();
+		
 		for (int i = 0; i < 15000; i++) {
 			Result query = new HCPChecker().query(new SkgaGolferNumber(i));
 			if (null == query) {
