@@ -2,6 +2,7 @@ package org.jboss.as.quickstarts.kitchensink.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,14 +34,9 @@ public class Member implements Serializable {
    @Pattern(regexp = "[A-Za-z ]*", message = "must contain only letters and spaces")
    private String name;
 
-   @NotNull
-   @NotEmpty
-   @Email
+   @Basic(optional= true)
    private String email;
 
-   @NotNull
-   @Size(min = 10, max = 12)
-   @Digits(fraction = 0, integer = 12)
    @Column(name = "phone_number")
    private String phoneNumber;
 
