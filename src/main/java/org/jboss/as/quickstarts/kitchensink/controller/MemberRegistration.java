@@ -48,6 +48,7 @@ public class MemberRegistration {
 		em.persist(run);
 		log.info("Starting scratching...");
 		utx.commit();
+
 		utx.begin();
 		
 		for (int i = 0; i < 15000; i++) {
