@@ -1,22 +1,21 @@
 package com.laurinka.skga.server.scratch;
 
 public class SkgaGolferNumber {
-    String nr;
     int i;
 
     public SkgaGolferNumber(String anr) {
-        nr = anr;
+        i = Integer.getInteger(anr);
 
     }
 
     public SkgaGolferNumber(int ani) {
         i = ani;
-        String s = "000000" + i;
-        nr = s.substring(s.length() - 5, s.length());
+
     }
 
     public String asString() {
-        return nr;
+        String s = "000000" + i;
+        return s.substring(s.length() - 5, s.length());
     }
 
     public int asInt() {

@@ -43,8 +43,11 @@ public class SkgaNumbersJob {
     }
 
     private void checkRange(SkgaGolferNumber from, SkgaGolferNumber aTo) throws IOException {
-        log.info("Starting range: " + from.asString() + " - " + aTo.asString());
-        for (int i = from.asInt(); i < aTo.asInt(); i++) {
+        String s = from.asString();
+        log.info("Starting range: " + s + " - " + aTo.asString());
+        int start = from.asInt();
+        start++;
+        for (int i = start; i < aTo.asInt(); i++) {
             HCPChecker checker = new HCPChecker();
             SkgaGolferNumber nr = new SkgaGolferNumber(i);
 
