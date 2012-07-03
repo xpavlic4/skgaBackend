@@ -22,6 +22,9 @@ public class SkgaNumber implements Serializable {
     @Basic(optional = false)
     private String nr;
 
+    public SkgaNumber() {
+    }
+
     public SkgaNumber(String nr) {
         this.nr = nr;
     }
