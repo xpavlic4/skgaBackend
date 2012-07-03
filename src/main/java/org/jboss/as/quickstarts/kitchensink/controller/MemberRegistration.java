@@ -19,14 +19,8 @@ import com.laurinka.skga.server.model.SnapshotRun;
 import com.laurinka.skga.server.scratch.HCPChecker;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 
-// The @Stateful annotation eliminates the need for manual transaction demarcation
 @Stateful
 @TransactionManagement(TransactionManagementType.BEAN)
-// The @Model stereotype is a convenience mechanism to make this a
-// request-scoped bean that has an
-// EL name
-// Read more about the @Model stereotype in this FAQ:
-// http://sfwk.org/Documentation/WhatIsThePurposeOfTheModelAnnotation
 @Model
 public class MemberRegistration {
 
@@ -53,9 +47,6 @@ public class MemberRegistration {
 		
 		for (int i = 0; i < 15000; i++) {
 			Result query = new HCPChecker().query(new SkgaGolferNumber(i));
-			if (null == query) {
-				continue;
-			}
 			if (i % 10 == 0) {
 				log.info("Transaction save");
 				em.flush();
@@ -63,9 +54,8 @@ public class MemberRegistration {
 				utx.commit();
 				utx.begin();
 			}
-			if (i% 1000 == 0) {
-				log.info("Escaping after 1000");
-				break;
+			if (null == query) {
+				continue;
 			}
 			em.persist(new Snapshot(query, run));
 			log.info(query.toString());
