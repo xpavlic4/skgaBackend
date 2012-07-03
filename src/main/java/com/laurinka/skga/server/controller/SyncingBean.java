@@ -2,7 +2,6 @@ package com.laurinka.skga.server.controller;
 
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.Snapshot;
-import com.laurinka.skga.server.model.SnapshotRun;
 import com.laurinka.skga.server.scratch.HCPChecker;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.scratch.SkgaNumbersJob;
@@ -43,12 +42,6 @@ public class SyncingBean {
 
     public void register() throws Exception {
         utx.begin();
-        SnapshotRun run = new SnapshotRun();
-        em.persist(run);
-        log.info("Starting scratching...");
-        utx.commit();
-
-        utx.begin();
 
         for (int i = 0; i < 15000; i++) {
             Result query = new HCPChecker().query(new SkgaGolferNumber(i));
@@ -62,7 +55,7 @@ public class SyncingBean {
             if (null == query) {
                 continue;
             }
-            em.persist(new Snapshot(query, run));
+            em.persist(new Snapshot(query));
             log.info(query.toString());
         }
         utx.commit();

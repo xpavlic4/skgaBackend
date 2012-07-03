@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Entity
 @XmlRootElement
 @Table
-public class Snapshot implements Serializable {
+public class Configuration implements Serializable {
     /**
      * Default value included to remove warning. Remove or modify at will. *
      */
@@ -17,15 +17,15 @@ public class Snapshot implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Embedded
-    private Result result;
+    @Basic(optional = false)
+    private
+    String name;
 
+    @Basic(optional = false)
+    private
+    String value;
 
-    public Snapshot() {
-    }
-
-    public Snapshot(Result aresult) {
-        this.result = aresult;
+    public Configuration() {
     }
 
     public Long getId() {
@@ -36,11 +36,19 @@ public class Snapshot implements Serializable {
         this.id = id;
     }
 
-    public Result getResult() {
-        return result;
+    public String getName() {
+        return name;
     }
 
-    public void setResult(Result result) {
-        this.result = result;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

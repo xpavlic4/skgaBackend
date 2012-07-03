@@ -1,15 +1,16 @@
 package com.laurinka.skga.server.rest;
 
+import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.SkgaNumber;
+import com.laurinka.skga.server.rest.model.Hcp;
+import com.laurinka.skga.server.scratch.HCPChecker;
+import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -34,10 +35,18 @@ public class MemberResourceRESTService {
     @GET
     @Path("/{nr:[0-9][0-9]*}")
     @Produces("text/xml")
-    public SkgaNumber lookupMemberById(@PathParam("nr") String aNr) {
-        String s = "select m from SkgaNumber m where m.nr = :nr";
-        TypedQuery<SkgaNumber> query = em.createQuery(s, SkgaNumber.class);
-        query.setParameter("nr", aNr);
-        return query.getSingleResult();
+    public Hcp lookupMemberById(@PathParam("nr") String aNr) {
+        Result query = null;
+        try {
+            query = new HCPChecker().query(new SkgaGolferNumber(aNr));
+        } catch (IOException e) {
+            throw new WebApplicationException(e);
+        }
+        Hcp hcp = new Hcp();
+        hcp.setHandicap(query.getHcp());
+        hcp.setNumber(query.getSkgaNr());
+        hcp.setName(query.getName());
+        hcp.setClub(query.getClub());
+        return hcp;
     }
 }
