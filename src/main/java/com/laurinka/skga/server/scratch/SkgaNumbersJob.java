@@ -25,7 +25,7 @@ public class SkgaNumbersJob {
         Long maxId;
         Query maxQuery = em.createQuery("select max(m.id) from SkgaNumber m");
         maxId = (Long) maxQuery.getSingleResult();
-        if (maxId.longValue() == 0) {
+        if (maxId == null || maxId.longValue() == 0) {
             log.info("No Skga Numbers, starting from 0!");
             checkFrom(new SkgaGolferNumber(0));
             return;
