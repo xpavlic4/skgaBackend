@@ -3,8 +3,9 @@ package com.laurinka.skga.server.scratch;
 public class SkgaGolferNumber {
     int i;
 
-    public SkgaGolferNumber(String anr) {
-        i = Integer.getInteger(anr);
+    public SkgaGolferNumber(String tmp) {
+        String anr = tmp.replaceFirst("^0+(?!$)", "");
+        i = Integer.parseInt(anr);
 
     }
 
