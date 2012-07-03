@@ -7,7 +7,6 @@ import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -24,10 +23,9 @@ public class SkgaNumbersJob {
     @Schedule
     public void updateNumbers() throws IOException {
         Long maxId;
-        try {
-            Query maxQuery = em.createQuery("select max(m.id) from SkgaNumber m");
-            maxId = (Long) maxQuery.getSingleResult();
-        } catch (NoResultException nre) {
+        Query maxQuery = em.createQuery("select max(m.id) from SkgaNumber m");
+        maxId = (Long) maxQuery.getSingleResult();
+        if (maxId.longValue() == 0) {
             log.info("No Skga Numbers, starting from 0!");
             checkFrom(new SkgaGolferNumber(0));
             return;
@@ -60,5 +58,4 @@ public class SkgaNumbersJob {
         }
         log.info("End");
     }
-
 }
