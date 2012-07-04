@@ -3,6 +3,7 @@ package com.laurinka.skga.server.model;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @XmlRootElement
@@ -20,11 +21,16 @@ public class Snapshot implements Serializable {
     @Embedded
     private Result result;
 
+    @Basic(optional = false)
+    private Date createdAt;
+
 
     public Snapshot() {
+        setCreatedAt(new Date());
     }
 
     public Snapshot(Result aresult) {
+        this();
         this.result = aresult;
     }
 
@@ -42,5 +48,13 @@ public class Snapshot implements Serializable {
 
     public void setResult(Result result) {
         this.result = result;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }

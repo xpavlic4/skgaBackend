@@ -22,11 +22,27 @@ public class SkgaNumber implements Serializable {
     @Basic(optional = false)
     private String nr;
 
+    @ManyToOne
+    private Club club;
+
+
+    @Basic(optional = true)
+    private String name;
+
     public SkgaNumber() {
     }
 
     public SkgaNumber(String nr) {
         this.nr = nr;
+        date = new Date();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDate() {
@@ -58,4 +74,11 @@ public class SkgaNumber implements Serializable {
         this.nr = nr;
     }
 
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
 }
