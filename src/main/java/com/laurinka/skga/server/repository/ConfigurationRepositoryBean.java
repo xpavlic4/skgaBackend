@@ -35,7 +35,7 @@ public class ConfigurationRepositoryBean implements ConfigurationRepository {
         }
 
         Configuration entity = new Configuration();
-        entity.setName(Keys.NEW_NUMBERS_OFFSET.name());
+        entity.setKey(Keys.NEW_NUMBERS_OFFSET.name());
         entity.setValue("500");
         em.persist(entity);
     }

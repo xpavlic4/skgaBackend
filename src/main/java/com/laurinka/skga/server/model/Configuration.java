@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @XmlRootElement
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "key"))
 public class Configuration implements Serializable {
     /**
      * Default value included to remove warning. Remove or modify at will. *
@@ -19,7 +19,7 @@ public class Configuration implements Serializable {
 
     @Basic(optional = false)
     private
-    String name;
+    String key;
 
     @Basic(optional = false)
     private
@@ -36,12 +36,12 @@ public class Configuration implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getKey() {
+        return key;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getValue() {
