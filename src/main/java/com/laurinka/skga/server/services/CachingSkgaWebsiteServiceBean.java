@@ -21,7 +21,8 @@ public class CachingSkgaWebsiteServiceBean implements SkgaWebsiteService {
     public Result findDetail(SkgaGolferNumber nr) {
         try {
             Result result = new HCPChecker().query(nr);
-            cache.cache(result);
+            if (null != result)
+                cache.cache(result);
             return result;
         } catch (IOException e) {
             e.printStackTrace();
