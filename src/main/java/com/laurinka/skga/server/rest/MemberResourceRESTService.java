@@ -3,14 +3,13 @@ package com.laurinka.skga.server.rest;
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.SkgaNumber;
 import com.laurinka.skga.server.rest.model.Hcp;
-import com.laurinka.skga.server.scratch.HCPChecker;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
+import com.laurinka.skga.server.services.SkgaWebsiteService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.ws.rs.*;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,6 +22,9 @@ import java.util.List;
 public class MemberResourceRESTService {
     @Inject
     private EntityManager em;
+
+    @Inject
+    private SkgaWebsiteService service;
 
     @GET
     @Produces("text/xml")
@@ -37,11 +39,10 @@ public class MemberResourceRESTService {
     @Produces("text/xml")
     public Hcp lookupMemberById(@PathParam("nr") String aNr) {
         Result query = null;
-        try {
-            query = new HCPChecker().query(new SkgaGolferNumber(aNr));
-        } catch (IOException e) {
-            throw new WebApplicationException(e);
-        }
+        query = service.findDetail(new SkgaGolferNumber(aNr));
+        if (null == query)
+            throw new WebApplicationException();
+
         Hcp hcp = new Hcp();
         hcp.setHandicap(query.getHcp());
         hcp.setNumber(query.getSkgaNr());

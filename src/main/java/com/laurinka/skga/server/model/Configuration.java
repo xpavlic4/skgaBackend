@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @XmlRootElement
-@Table
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class Configuration implements Serializable {
     /**
      * Default value included to remove warning. Remove or modify at will. *

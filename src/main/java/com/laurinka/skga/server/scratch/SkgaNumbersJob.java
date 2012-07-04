@@ -2,6 +2,7 @@ package com.laurinka.skga.server.scratch;
 
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.SkgaNumber;
+import com.laurinka.skga.server.repository.ConfigurationRepository;
 
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
@@ -19,6 +20,8 @@ public class SkgaNumbersJob {
 
     @Inject
     Logger log;
+    @Inject
+    ConfigurationRepository config;
 
     @Schedule
     public void updateNumbers() throws IOException {
@@ -38,7 +41,9 @@ public class SkgaNumbersJob {
     }
 
     private void checkFrom(SkgaGolferNumber from) throws IOException {
-        int tmpTo = from.asInt() + 100;
+        int numberOfNewSkgaNumbersToCheck = config.getNumberOfNewSkgaNumbersToCheck();
+        log.info("Öffset ahead: " + numberOfNewSkgaNumbersToCheck);
+        int tmpTo = from.asInt() + numberOfNewSkgaNumbersToCheck;
         checkRange(from, new SkgaGolferNumber(tmpTo));
     }
 
