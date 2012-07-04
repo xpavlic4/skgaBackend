@@ -3,16 +3,14 @@ package com.laurinka.skga.server.repository;
 import com.laurinka.skga.server.model.Configuration;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.logging.Logger;
 
-@Startup
-@Singleton
+@ApplicationScoped
 public class ConfigurationRepositoryBean implements ConfigurationRepository {
 
     @Inject
