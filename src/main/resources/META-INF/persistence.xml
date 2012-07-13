@@ -13,7 +13,7 @@ can find it in the source at src/main/webapp/WEB-INF/kitchensink-quickstart-ds.x
         <jta-data-source>java:jboss/datasources/MysqlDS</jta-data-source>
         <properties>
             <!-- Properties for Hibernate -->
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
             <property name="hibernate.show_sql" value="false"/>
         </properties>
     </persistence-unit>
