@@ -22,9 +22,6 @@ public class SkgaNumber implements Serializable {
     @Basic(optional = false)
     private String nr;
 
-    @ManyToOne
-    private Club club;
-
 
     @Basic(optional = true)
     private String name;
@@ -75,11 +72,4 @@ public class SkgaNumber implements Serializable {
         this.nr = nr;
     }
 
-    public Club getClub() {
-        return club;
-    }
-
-    public void setClub(Club club) {
-        this.club = club;
-    }
 }
