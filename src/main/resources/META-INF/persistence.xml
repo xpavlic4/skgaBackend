@@ -15,6 +15,7 @@ can find it in the source at src/main/webapp/WEB-INF/kitchensink-quickstart-ds.x
             <!-- Properties for Hibernate -->
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.connection.zeroDateTimeBehavior" value="convertToNull"/>
         </properties>
     </persistence-unit>
 </persistence>

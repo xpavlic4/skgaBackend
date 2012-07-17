@@ -15,7 +15,7 @@ public class SkgaNumber implements Serializable {
     private Long id;
 
     private static final long serialVersionUID = 5974836977140765502L;
-    @Basic(optional = false)
+    @Basic(optional = true)
     private Date date;
 
 
