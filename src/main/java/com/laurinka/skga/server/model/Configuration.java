@@ -8,41 +8,39 @@ import java.io.Serializable;
 @XmlRootElement
 @Table
 public class Configuration implements Serializable {
-    /**
-     * Default value included to remove warning. Remove or modify at will. *
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Default value included to remove warning. Remove or modify at will. *
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    @Basic(optional = false)
-    private
-    String name;
+	@Basic(optional = false)
+	private String name;
 
-    @Basic(optional = false)
-    private
-    String value;
+	@Basic(optional = false)
+	private String value;
 
-    public Configuration() {
-    }
+	public Configuration() {
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 	public String getName() {
 		return name;
