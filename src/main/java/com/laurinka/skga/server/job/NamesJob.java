@@ -27,7 +27,7 @@ public class NamesJob {
 	@Inject
 	private SkgaWebsiteService service;
 
-	@Schedule(hour = "*")
+	@Schedule(hour = "*", persistent = false)
 	public void updateNames() throws IOException {
 		TypedQuery<SkgaNumber> numbers = em.createQuery(
 				"select m from SkgaNumber m order by m.date asc",

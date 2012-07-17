@@ -28,7 +28,7 @@ public class SkgaNumbersJob {
     @Inject
     SkgaWebsiteService service;
 
-    @Schedule
+    @Schedule(persistent = false)
     public void updateNumbers() throws IOException {
         Long maxId;
         Query maxQuery = em.createQuery("select max(m.id) from SkgaNumber m");
