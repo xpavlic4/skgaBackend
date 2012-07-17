@@ -1,6 +1,7 @@
 package com.laurinka.skga.server.job;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,46 +13,47 @@ import javax.persistence.TypedQuery;
 
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.SkgaNumber;
-import com.laurinka.skga.server.repository.ConfigurationRepository;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.services.SkgaWebsiteService;
 
 @Stateless
 public class NamesJob {
 
-    @Inject
-    private EntityManager em;
+	@Inject
+	private EntityManager em;
 
-    @Inject
-    Logger log;
-    @Inject
-    ConfigurationRepository config;
-    @Inject
-    SkgaWebsiteService service;
+	@Inject
+	private Logger log;
+	@Inject
+	private SkgaWebsiteService service;
 
-    @Schedule(hour="*")
-    public void updateNames() throws IOException {
-         TypedQuery<SkgaNumber> numbers = em.createQuery("select m from SkgaNumber m order by m.date asc", SkgaNumber.class);
-         numbers.setMaxResults(100);
-         List<SkgaNumber> resultList = numbers.getResultList();
-         if (null == resultList || resultList.isEmpty())
-        	 return;
-         process(resultList);
-    }
+	@Schedule(hour = "*")
+	public void updateNames() throws IOException {
+		TypedQuery<SkgaNumber> numbers = em.createQuery(
+				"select m from SkgaNumber m order by m.date asc",
+				SkgaNumber.class);
+		numbers.setMaxResults(100);
+		List<SkgaNumber> resultList = numbers.getResultList();
+		if (null == resultList || resultList.isEmpty())
+			return;
+		process(resultList);
+	}
 
 	private void process(List<SkgaNumber> resultList) {
 		for (SkgaNumber skgaNumber : resultList) {
 			log.info("Updating name of " + skgaNumber.getNr());
 			processSingle(skgaNumber);
 		}
-		
+
 	}
 
 	private void processSingle(SkgaNumber skgaNumber) {
-		Result detail = service.findDetail(new SkgaGolferNumber(skgaNumber.getNr()));
+		Result detail = service.findDetail(new SkgaGolferNumber(skgaNumber
+				.getNr()));
 		if (null == detail)
 			return;
 		skgaNumber.setName(detail.getName());
+		skgaNumber.setDate(new Date());
 		em.persist(skgaNumber);
 	}
 
