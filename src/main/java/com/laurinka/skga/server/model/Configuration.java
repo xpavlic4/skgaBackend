@@ -19,7 +19,7 @@ public class Configuration implements Serializable {
 
     @Basic(optional = false)
     private
-    String key;
+    String name;
 
     @Basic(optional = false)
     private
@@ -36,14 +36,6 @@ public class Configuration implements Serializable {
         this.id = id;
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
     public String getValue() {
         return value;
     }
@@ -51,4 +43,12 @@ public class Configuration implements Serializable {
     public void setValue(String value) {
         this.value = value;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
