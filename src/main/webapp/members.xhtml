@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+        <h1>SKGA handicap</h1>
+
+        <h2>Members</h2>
+        <h:panelGroup rendered="#{empty members}">
+            <em>No registered members.</em>
+        </h:panelGroup>
+        <h:dataTable var="_member" value="#{members}" rendered="#{not empty members}">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                #{_member.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Number</f:facet>
+                #{_member.nr}
+            </h:column>
+            <h:column>
+                <f:facet name="header">REST URL</f:facet>
+                <a href="#{request.contextPath}/rest/members/#{_member.nr}">/rest/members/#{_member.nr}</a>
+            </h:column>
+            <f:facet name="footer">
+                REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>
+            </f:facet>
+        </h:dataTable>
+    </ui:define>
+</ui:composition>

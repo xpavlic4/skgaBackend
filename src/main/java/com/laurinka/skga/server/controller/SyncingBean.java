@@ -1,21 +1,16 @@
 package com.laurinka.skga.server.controller;
 
-import com.laurinka.skga.server.scratch.SkgaNumbersJob;
-
-import javax.annotation.Resource;
-import javax.ejb.Stateful;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-import javax.enterprise.inject.Model;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.transaction.UserTransaction;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+import javax.ejb.Stateful;
+import javax.enterprise.inject.Model;
+import javax.inject.Inject;
+
+import com.laurinka.skga.server.job.NamesJob;
+import com.laurinka.skga.server.job.SkgaNumbersJob;
+
 @Stateful
-@TransactionManagement(TransactionManagementType.BEAN)
 @Model
 public class SyncingBean {
 
@@ -23,16 +18,10 @@ public class SyncingBean {
     private Logger log;
 
     @Inject
-    private FacesContext facesContext;
-
-    @Inject
-    private EntityManager em;
-
-    @Resource
-    private UserTransaction utx;
-
-    @Inject
     SkgaNumbersJob skgaNumbersJob;
+    
+    @Inject
+    NamesJob namesJob;
 
     public void syncNumbers() throws IOException {
         log.info("updating numbers...start");
@@ -40,4 +29,9 @@ public class SyncingBean {
         log.info("updating numbers...end");
     }
 
+    public void syncNames() throws IOException {
+        log.info("updating names...start");
+        namesJob.updateNames();
+        log.info("updating names...end");
+    }
 }

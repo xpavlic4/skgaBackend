@@ -32,8 +32,9 @@ public class SkgaNumber implements Serializable {
     public SkgaNumber() {
     }
 
-    public SkgaNumber(String nr) {
+    public SkgaNumber(String nr, String aname) {
         this.nr = nr;
+        this.name = aname;
         date = new Date();
     }
 

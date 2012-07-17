@@ -5,15 +5,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
-        <h1>Welcome to JBoss AS 7!</h1>
-
-        <p>You have successfully deployed a Java EE 6 web application on JBoss AS 7.</p>
+        <h1>SKGA handicap</h1>
 
         <h:form id="reg">
-            <h2>Register (Bean Validation example)</h2>
-
-            <p>Enforces annotation-based constraints defined on the model class.</p>
-
+            <h2>Admin</h2>
             <p>
                 <h:panelGrid columns="3">
                     <h:commandButton id="numbers" action="#{syncingBean.syncNumbers}" value="Check numbers"/>
@@ -21,28 +16,15 @@
                                 globalOnly="true"/>
                 </h:panelGrid>
             </p>
+            
+            <p>
+                <h:panelGrid columns="3">
+                    <h:commandButton id="numbers" action="#{syncingBean.syncNames}" value="Check names"/>
+                    <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
+                                globalOnly="true"/>
+                </h:panelGrid>
+            </p>
         </h:form>
 
-        <h2>Members</h2>
-        <h:panelGroup rendered="#{empty members}">
-            <em>No registered members.</em>
-        </h:panelGroup>
-        <h:dataTable var="_member" value="#{members}" rendered="#{not empty members}">
-            <h:column>
-                <f:facet name="header">Id</f:facet>
-                #{_member.id}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Number</f:facet>
-                #{_member.nr}
-            </h:column>
-            <h:column>
-                <f:facet name="header">REST URL</f:facet>
-                <a href="#{request.contextPath}/rest/members/#{_member.nr}">/rest/members/#{_member.nr}</a>
-            </h:column>
-            <f:facet name="footer">
-                REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>
-            </f:facet>
-        </h:dataTable>
     </ui:define>
 </ui:composition>

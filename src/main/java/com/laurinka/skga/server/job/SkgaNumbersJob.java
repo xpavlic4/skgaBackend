@@ -1,16 +1,19 @@
-package com.laurinka.skga.server.scratch;
+package com.laurinka.skga.server.job;
 
-import com.laurinka.skga.server.model.Result;
-import com.laurinka.skga.server.model.SkgaNumber;
-import com.laurinka.skga.server.repository.ConfigurationRepository;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.io.IOException;
-import java.util.logging.Logger;
+
+import com.laurinka.skga.server.model.Result;
+import com.laurinka.skga.server.model.SkgaNumber;
+import com.laurinka.skga.server.repository.ConfigurationRepository;
+import com.laurinka.skga.server.scratch.SkgaGolferNumber;
+import com.laurinka.skga.server.services.SkgaWebsiteService;
 
 @Stateless
 public class SkgaNumbersJob {
@@ -22,6 +25,8 @@ public class SkgaNumbersJob {
     Logger log;
     @Inject
     ConfigurationRepository config;
+    @Inject
+    SkgaWebsiteService service;
 
     @Schedule
     public void updateNumbers() throws IOException {
@@ -53,16 +58,16 @@ public class SkgaNumbersJob {
         int start = from.asInt();
         start++;
         for (int i = start; i < aTo.asInt(); i++) {
-            HCPChecker checker = new HCPChecker();
             SkgaGolferNumber nr = new SkgaGolferNumber(i);
 
+            Result detail = service.findDetail(nr);
             log.info("Checking " + nr.asString() + " ");
-            Result query = checker.query(nr);
-            if (null == query) {
+            if (null == detail) {
                 continue;
             }
-            em.persist(new SkgaNumber(nr.asString()));
-            log.info("New skga number: " + query.toString());
+            SkgaNumber entity = new SkgaNumber(nr.asString(), detail.getName());
+			em.persist(entity);
+            log.info("New skga number: " + detail.toString());
         }
         log.info("End");
     }
