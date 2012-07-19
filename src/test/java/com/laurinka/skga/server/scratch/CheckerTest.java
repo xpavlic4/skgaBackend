@@ -29,8 +29,8 @@ public class CheckerTest {
 	
 	@Test
 	public void testCharset() throws IOException {
-		Result r  = new HCPChecker().query(new SkgaGolferNumber(1));
-//		System.out.println(r);
+		Result r  = new HCPChecker().query(new SkgaGolferNumber(4));
+		System.out.println(r);
 	}
 
 }
