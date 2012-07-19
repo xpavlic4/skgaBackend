@@ -5,7 +5,6 @@ import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -26,7 +25,6 @@ import com.laurinka.skga.server.services.SkgaWebsiteService;
  */
 @Path("/members")
 @RequestScoped
-@NamedQuery(name = "all", query = "select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name, m.nr) from SkgaNumber m order by m.name")
 public class MemberResourceRESTService {
 	@Inject
 	private EntityManager em;
@@ -37,8 +35,11 @@ public class MemberResourceRESTService {
 	@GET
 	@Produces("text/xml")
 	public List<NameNumberXml> listAllMembers() {
-		List<NameNumberXml> results = em.createNamedQuery("all", NameNumberXml.class)
-				.getResultList();
+
+		List<NameNumberXml> results = em
+				.createQuery(
+						"select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name, m.nr) from SkgaNumber m order by m.name", //
+						NameNumberXml.class).getResultList();
 		return results;
 	}
 
