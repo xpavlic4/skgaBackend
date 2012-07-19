@@ -7,7 +7,8 @@ public class NameNumberXml {
 	private String name;
 	private String number;
 	
-	
+	public NameNumberXml() {
+	}
 	public NameNumberXml(String name, String number) {
 		super();
 		this.name = name;
