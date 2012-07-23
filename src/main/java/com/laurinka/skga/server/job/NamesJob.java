@@ -1,6 +1,7 @@
 package com.laurinka.skga.server.job;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -53,8 +54,17 @@ public class NamesJob {
 		if (null == detail)
 			return;
 		skgaNumber.setName(detail.getName());
+		skgaNumber.setName2(Utils.stripAccents(detail.getName()));
 		skgaNumber.setDate(new Date());
 		em.persist(skgaNumber);
+	}
+	
+	private static class Utils {
+		static String stripAccents (String anStr) {
+			String s = Normalizer.normalize(anStr, Normalizer.Form.NFD);
+			s = s.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+			return s;
+		}
 	}
 
 }

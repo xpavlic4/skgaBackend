@@ -26,7 +26,19 @@ public class SkgaNumber implements Serializable {
     @Basic(optional = true)
     private String name;
 
-    public SkgaNumber() {
+
+    @Basic(optional = true)
+    private String name2;
+    
+    public String getName2() {
+		return name2;
+	}
+
+	public void setName2(String name2) {
+		this.name2 = name2;
+	}
+
+	public SkgaNumber() {
     }
 
     public SkgaNumber(String nr, String aname) {

@@ -1,6 +1,7 @@
 package com.laurinka.skga.server.scratch;
 
 import java.io.IOException;
+import java.text.Normalizer;
 import java.text.ParseException;
 
 import org.junit.Assert;
@@ -31,6 +32,9 @@ public class CheckerTest {
 	public void testCharset() throws IOException {
 		Result r  = new HCPChecker().query(new SkgaGolferNumber(4));
 		System.out.println(r);
+		String s = Normalizer.normalize(r.getName(), Normalizer.Form.NFD);
+		s = s.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+		System.out.println(s);
 	}
 
 }
