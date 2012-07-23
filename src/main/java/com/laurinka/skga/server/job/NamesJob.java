@@ -33,7 +33,7 @@ public class NamesJob {
 		TypedQuery<SkgaNumber> numbers = em.createQuery(
 				"select m from SkgaNumber m order by m.date asc",
 				SkgaNumber.class);
-		numbers.setMaxResults(100);
+		numbers.setMaxResults(1000);
 		List<SkgaNumber> resultList = numbers.getResultList();
 		if (null == resultList || resultList.isEmpty())
 			return;
