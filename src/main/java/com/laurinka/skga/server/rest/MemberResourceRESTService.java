@@ -38,7 +38,7 @@ public class MemberResourceRESTService {
 
 		List<NameNumberXml> results = em
 				.createQuery(
-						"select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name, m.nr) from SkgaNumber m order by m.name", //
+						"select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from SkgaNumber m order by m.name", //
 						NameNumberXml.class).getResultList();
 		return results;
 	}
