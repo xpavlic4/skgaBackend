@@ -61,6 +61,8 @@ public class NamesJob {
 	
 	private static class Utils {
 		static String stripAccents (String anStr) {
+			if (null == anStr || "".equals(anStr))
+				return "";
 			String s = Normalizer.normalize(anStr, Normalizer.Form.NFD);
 			s = s.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 			return s;
