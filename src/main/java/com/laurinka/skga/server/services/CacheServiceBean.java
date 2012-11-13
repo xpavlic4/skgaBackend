@@ -14,6 +14,6 @@ public class CacheServiceBean implements CacheService {
 
     @Override
     public void cache(Result r) {
-        em.persist(new Snapshot(r));
+        //em.persist(new Snapshot(r));
     }
 }
