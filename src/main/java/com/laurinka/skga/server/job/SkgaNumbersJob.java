@@ -14,6 +14,7 @@ import com.laurinka.skga.server.model.SkgaNumber;
 import com.laurinka.skga.server.repository.ConfigurationRepository;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.services.SkgaWebsiteService;
+import com.laurinka.skga.server.utils.Utils;
 
 @Stateless
 public class SkgaNumbersJob {
@@ -66,6 +67,7 @@ public class SkgaNumbersJob {
                 continue;
             }
             SkgaNumber entity = new SkgaNumber(nr.asString(), detail.getName());
+            entity.setName2(Utils.stripAccents(detail.getName()));
 			em.persist(entity);
             log.info("New skga number: " + detail.toString());
         }
