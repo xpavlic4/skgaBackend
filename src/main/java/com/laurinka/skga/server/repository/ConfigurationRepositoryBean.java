@@ -36,13 +36,14 @@ public class ConfigurationRepositoryBean implements ConfigurationRepository {
         entity.setName(Keys.NEW_NUMBERS_OFFSET.name());
         entity.setValue("500");
         em.persist(entity);
+        em.flush();
     }
 
     private Configuration findConfiguration(Keys key) {
         try {
-            String s = "select m from Configuration m where m.key =:key";
+            String s = "select m from Configuration m where m.name =:name";
             TypedQuery<Configuration> query = em.createQuery(s, Configuration.class);
-            query.setParameter("key", key.name());
+            query.setParameter("name", key.name());
             return query.getSingleResult();
         } catch (NoResultException nre) {
             return null;
