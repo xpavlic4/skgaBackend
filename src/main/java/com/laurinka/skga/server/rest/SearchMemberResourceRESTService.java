@@ -36,7 +36,7 @@ public class SearchMemberResourceRESTService {
 				.createQuery(
 						"select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from SkgaNumber m "
 								+ "where m.name2 is not null "
-								+ "and m.name2 like :name" + "order by m.name2", //
+								+ "and m.name2 like :name" + " order by m.name2", //
 						NameNumberXml.class)
 				.setParameter("custName", "%" + q + "%").setMaxResults(10)
 				.getResultList();
