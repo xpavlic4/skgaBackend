@@ -38,7 +38,7 @@ public class SearchMemberResourceRESTService {
 								+ "where m.name2 is not null "
 								+ "and m.name2 like :name" + " order by m.nr desc", //
 						NameNumberXml.class)
-				.setParameter("custName", "%" + q + "%").setMaxResults(10)
+				.setParameter("name", "%" + q + "%").setMaxResults(10)
 				.getResultList();
 		return results;
 	}
