@@ -1,5 +1,5 @@
-Skga craping app
---
+Skga backend
+=========================
 
-Donwloads constantly www.skga.sk web page
-REst interface of skga handicap
+Downloads data from skga.sk web page and stores them into database.
+Rest interface available for data to be exposed.
