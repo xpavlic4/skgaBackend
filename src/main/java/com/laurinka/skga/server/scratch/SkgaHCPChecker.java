@@ -10,8 +10,8 @@ import org.jsoup.select.Elements;
 
 import com.laurinka.skga.server.model.Result;
 
-public class HCPChecker {
-	Logger log = Logger.getLogger(HCPChecker.class.getName());
+public class SkgaHCPChecker {
+	Logger log = Logger.getLogger(SkgaHCPChecker.class.getName());
 
 	final String ID_HCP = "ctl00_RightContentPlaceholder_lbHcp";
 	final String ID_NR = "ctl00_RightContentPlaceholder_lbMemberNumber";

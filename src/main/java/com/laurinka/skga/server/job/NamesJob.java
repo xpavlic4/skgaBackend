@@ -1,12 +1,9 @@
 package com.laurinka.skga.server.job;
 
 import java.io.IOException;
-import java.text.Normalizer;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,6 +13,7 @@ import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.SkgaNumber;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.services.SkgaWebsiteService;
+import com.laurinka.skga.server.utils.Utils;
 
 @Stateless
 public class NamesJob {
@@ -28,12 +26,13 @@ public class NamesJob {
 	@Inject
 	private SkgaWebsiteService service;
 
-	@Schedule(hour = "*", persistent = false)
+	//@Schedule(hour = "*", persistent = false)
+	//no schedule because of caching
 	public void updateNames() throws IOException {
 		TypedQuery<SkgaNumber> numbers = em.createQuery(
-				"select m from SkgaNumber m order by m.date asc",
+				"select m from SkgaNumber m where m.name2 is null order by m.date asc",
 				SkgaNumber.class);
-		numbers.setMaxResults(1000);
+		numbers.setMaxResults(100);
 		List<SkgaNumber> resultList = numbers.getResultList();
 		if (null == resultList || resultList.isEmpty())
 			return;
@@ -55,18 +54,7 @@ public class NamesJob {
 			return;
 		skgaNumber.setName(detail.getName());
 		skgaNumber.setName2(Utils.stripAccents(detail.getName()));
-		skgaNumber.setDate(new Date());
 		em.persist(skgaNumber);
-	}
-	
-	private static class Utils {
-		static String stripAccents (String anStr) {
-			if (null == anStr || "".equals(anStr))
-				return "";
-			String s = Normalizer.normalize(anStr, Normalizer.Form.NFD);
-			s = s.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-			return s;
-		}
 	}
 
 }
