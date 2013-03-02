@@ -57,7 +57,7 @@ public class MemberListProducer {
         retrieveAllMembersOrderedByName();
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void retrieveCgfMembersOrderedByName() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<CgfNumber> criteria = cb.createQuery(CgfNumber.class);
