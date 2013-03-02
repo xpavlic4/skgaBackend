@@ -28,7 +28,7 @@ public class CgfHCPChecker {
 		
 		if (!isValid(document))
 			return null;
-		Result result = new Result();
+		Result result = Result.newCgf();
 		findHcp(document, result);
 		findNumber(document, result);
 		findClub(document, result);

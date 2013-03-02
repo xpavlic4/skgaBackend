@@ -27,7 +27,7 @@ public class SkgaHCPChecker {
 		
 		if (!isValid(document))
 			return null;
-		Result result = new Result();
+		Result result = Result.newSkga();
 		findHcp(document, result);
 		findNumber(document, result);
 		findClub(document, result);
