@@ -1,7 +1,5 @@
 package com.laurinka.skga.server.rest;
 
-import java.util.List;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -13,8 +11,7 @@ import javax.ws.rs.WebApplicationException;
 
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.rest.model.Hcp;
-import com.laurinka.skga.server.rest.model.NameNumberXml;
-import com.laurinka.skga.server.scratch.SkgaGolferNumber;
+import com.laurinka.skga.server.scratch.CgfGolferNumber;
 import com.laurinka.skga.server.services.SkgaWebsiteService;
 
 /**
@@ -23,9 +20,9 @@ import com.laurinka.skga.server.services.SkgaWebsiteService;
  * This class produces a RESTful service to read the contents of the members
  * table.
  */
-@Path("/members")
+@Path("/cgf")
 @RequestScoped
-public class MemberResourceRESTService {
+public class CgfMemberResourceRESTService {
 	@Inject
 	private EntityManager em;
 
@@ -33,24 +30,11 @@ public class MemberResourceRESTService {
 	private SkgaWebsiteService service;
 
 	@GET
-	@Produces("text/xml")
-	public List<NameNumberXml> listAllMembers() {
-
-		List<NameNumberXml> results = em
-				.createQuery(
-						"select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from SkgaNumber m " +
-						"where m.name2 is not null " +
-						"order by m.name2", //
-						NameNumberXml.class).getResultList();
-		return results;
-	}
-
-	@GET
 	@Path("/{nr:[0-9][0-9]*}")
 	@Produces("text/xml")
 	public Hcp lookupMemberById(@PathParam("nr") String aNr) {
 		Result query = null;
-		query = service.findDetail(new SkgaGolferNumber(aNr));
+		query = service.findDetail(new CgfGolferNumber(aNr));
 		if (null == query)
 			throw new WebApplicationException();
 

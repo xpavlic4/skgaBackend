@@ -1,11 +1,9 @@
 package com.laurinka.skga.server.job;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
