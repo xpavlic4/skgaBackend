@@ -35,7 +35,7 @@ public class CgfNumbersJob {
         Query maxQuery = em.createQuery("select max(m.id) from CgfNumber m");
         maxId = (Long) maxQuery.getSingleResult();
         if (maxId == null || maxId.longValue() == 0) {
-            log.info("No Skga Numbers, starting from 0!");
+            log.info("No Cgf Numbers, starting from 0!");
             checkFrom(new CgfGolferNumber(0));
             return;
         }
@@ -69,7 +69,7 @@ public class CgfNumbersJob {
             CgfNumber entity = new CgfNumber(nr.asString(), detail.getName());
             entity.setName2(Utils.stripAccents(detail.getName()));
 			em.persist(entity);
-            log.info("New skga number: " + detail.toString());
+            log.info("New Cgf number: " + detail.toString());
         }
         log.info("End");
     }
