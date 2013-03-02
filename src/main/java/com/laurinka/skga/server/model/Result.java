@@ -1,17 +1,33 @@
 package com.laurinka.skga.server.model;
 
 import javax.persistence.Embeddable;
-import java.util.HashMap;
-import java.util.Map;
 
 @Embeddable
 public class Result {
+    public enum Type {
+        SKGA, CGF;
+    }
+
+    public Result() {
+    }
 
     private String hcp;
+
     private String skgaNr;
     private String club;
     private String name;
+    private Type type;
 
+    public static Result newCgf() {
+        Result result = new Result();
+        result.setType(Type.CGF);
+        return result;
+    }
+    public static Result newSkga() {
+        Result result = new Result();
+        result.setType(Type.CGF);
+        return result;
+    }
 
     public void setClub(String club) {
         this.club = club;
@@ -45,19 +61,22 @@ public class Result {
         this.name = name;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
-        return "Result [hcp=" + hcp + ", skgaNr=" + skgaNr + ", club=" + club
-                + ", name=" + name + "]";
+        return "Result{" +
+                "hcp='" + hcp + '\'' +
+                ", skgaNr='" + skgaNr + '\'' +
+                ", club='" + club + '\'' +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                '}';
     }
-
-    public Map<String, String> asMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("hcp", getHcp());
-        map.put("skgaNr", getSkgaNr());
-        map.put("club", getClub());
-        map.put("name", getName());
-        return map;
-    }
-
 }
