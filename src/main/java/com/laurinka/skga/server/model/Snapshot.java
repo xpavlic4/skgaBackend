@@ -8,7 +8,9 @@ import java.util.Date;
 @Entity
 @XmlRootElement
 @Table
+@NamedQuery(name = Snapshot.LAST20, query = "select s from Snapshot s order by s.id desc")
 public class Snapshot implements Serializable {
+    public static final String LAST20 = "snapshot.last20";
     /**
      * Default value included to remove warning. Remove or modify at will. *
      */

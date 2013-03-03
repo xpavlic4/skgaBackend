@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                template="/WEB-INF/templates/default.xhtml">
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/templates/default.xhtml"
+        >
     <ui:define name="content">
         <h1>SKGA handicap</h1>
 
         <h:form id="reg">
             <h2>Admin</h2>
+
             <p>
                 <h:panelGrid columns="3">
                     <h:commandButton id="numbers" action="#{syncingBean.syncNumbers}" value="Check numbers"/>
@@ -16,17 +18,34 @@
                                 globalOnly="true"/>
                 </h:panelGrid>
             </p>
+
             <p>
                 <h:panelGrid columns="3">
                     <h:commandButton id="names" action="#{syncingBean.syncNames}" value="Check names"/>
                 </h:panelGrid>
             </p>
-             <p>
+
+            <p>
                 <h:panelGrid columns="3">
                     <h:commandButton action="#{syncingBean.save}" value="Test save"/>
                 </h:panelGrid>
             </p>
+
+
         </h:form>
+        <h:dataTable value="#{members}" var="i" rendered="#{not empty members}">
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                <h:outputText value="#{i.result.name}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">skgaNr</f:facet>
+                <h:outputText value="#{i.result.skgaNr}" />
+            </h:column>
+
+        </h:dataTable>
+        <h:outputText value="No results" rendered="#{empty members}" />
+
 
     </ui:define>
 </ui:composition>
