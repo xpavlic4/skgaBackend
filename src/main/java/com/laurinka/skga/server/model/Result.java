@@ -1,6 +1,8 @@
 package com.laurinka.skga.server.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Embeddable
 public class Result {
@@ -61,6 +63,7 @@ public class Result {
         this.name = name;
     }
 
+    @Enumerated(EnumType.STRING)
     public Type getType() {
         return type;
     }
