@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.SkgaNumber;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
-import com.laurinka.skga.server.services.SkgaWebsiteService;
+import com.laurinka.skga.server.services.WebsiteService;
 import com.laurinka.skga.server.utils.Utils;
 
 @Stateless
@@ -24,7 +24,7 @@ public class NamesJob {
 	@Inject
 	private Logger log;
 	@Inject
-	private SkgaWebsiteService service;
+	private WebsiteService service;
 
 	//@Schedule(hour = "*", persistent = false)
 	//no schedule because of caching

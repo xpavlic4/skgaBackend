@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 @ApplicationScoped
-public class CachingSkgaWebsiteServiceBean implements SkgaWebsiteService {
+public class CachingSkgaWebsiteServiceBean implements WebsiteService {
     @Inject
     Logger log;
 

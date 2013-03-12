@@ -9,6 +9,7 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import com.laurinka.skga.server.job.CgfNumbersJob;
 import com.laurinka.skga.server.job.NamesJob;
 import com.laurinka.skga.server.job.SkgaNumbersJob;
 import com.laurinka.skga.server.model.Configuration;
@@ -22,10 +23,18 @@ public class SyncingBean {
 
     @Inject
     SkgaNumbersJob skgaNumbersJob;
+    @Inject
+    CgfNumbersJob cgfNumbersJob;
     
     @Inject
     NamesJob namesJob;
 
+    public void syncCgfNumbers() throws IOException {
+        log.info("updating cgf numbers...start");
+        cgfNumbersJob.updateNumbers();
+        log.info("updating cgf numbers...end");
+    }
+    
     public void syncNumbers() throws IOException {
         log.info("updating numbers...start");
         skgaNumbersJob.updateNumbers();
