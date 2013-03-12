@@ -12,7 +12,7 @@ import javax.ws.rs.WebApplicationException;
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.rest.model.Hcp;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
-import com.laurinka.skga.server.services.SkgaWebsiteService;
+import com.laurinka.skga.server.services.WebsiteService;
 
 /**
  * JAX-RS Example
@@ -27,7 +27,7 @@ public class SkgaMemberResourceRESTService {
 	private EntityManager em;
 
 	@Inject
-	private SkgaWebsiteService service;
+	private WebsiteService service;
 
 	@GET
 	@Path("/{nr:[0-9][0-9]*}")

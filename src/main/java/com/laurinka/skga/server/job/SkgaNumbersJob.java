@@ -13,7 +13,7 @@ import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.SkgaNumber;
 import com.laurinka.skga.server.repository.ConfigurationRepository;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
-import com.laurinka.skga.server.services.SkgaWebsiteService;
+import com.laurinka.skga.server.services.WebsiteService;
 import com.laurinka.skga.server.utils.Utils;
 
 @Stateless
@@ -27,7 +27,7 @@ public class SkgaNumbersJob {
     @Inject
     ConfigurationRepository config;
     @Inject
-    SkgaWebsiteService service;
+    WebsiteService service;
 
     @Schedule(persistent = false)
     public void updateNumbers() throws IOException {

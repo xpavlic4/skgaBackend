@@ -13,12 +13,19 @@
 
             <p>
                 <h:panelGrid columns="3">
-                    <h:commandButton id="numbers" action="#{syncingBean.syncNumbers}" value="Check numbers"/>
+                    <h:commandButton id="numbers" action="#{syncingBean.syncNumbers}" value="Check SKGA numbers"/>
                     <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
                                 globalOnly="true"/>
                 </h:panelGrid>
             </p>
 
+        <p>
+                <h:panelGrid columns="3">
+                    <h:commandButton id="numbers" action="#{syncingBean.syncCgfNumbers}" value="Check CGF numbers"/>
+                    <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
+                                globalOnly="true"/>
+                </h:panelGrid>
+            </p>
             <p>
                 <h:panelGrid columns="3">
                     <h:commandButton id="names" action="#{syncingBean.syncNames}" value="Check names"/>

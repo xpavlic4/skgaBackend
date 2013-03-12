@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import com.laurinka.skga.server.rest.model.NameNumberXml;
-import com.laurinka.skga.server.services.SkgaWebsiteService;
+import com.laurinka.skga.server.services.WebsiteService;
 
 /**
  * JAX-RS Example
@@ -26,7 +26,7 @@ public class SearchMemberResourceRESTService {
 	private EntityManager em;
 
 	@Inject
-	private SkgaWebsiteService service;
+	private WebsiteService service;
 
 	@GET
 	@Path("/search")

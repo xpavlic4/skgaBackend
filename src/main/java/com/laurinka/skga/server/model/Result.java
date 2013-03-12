@@ -27,7 +27,7 @@ public class Result {
     }
     public static Result newSkga() {
         Result result = new Result();
-        result.setType(Type.CGF);
+        result.setType(Type.SKGA);
         return result;
     }
 
