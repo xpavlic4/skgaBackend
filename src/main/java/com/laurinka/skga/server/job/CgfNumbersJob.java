@@ -33,10 +33,10 @@ public class CgfNumbersJob {
 
     @Schedule(persistent = false)
     public void updateNumbers() throws IOException {
-        Long maxId;
+        Integer maxId;
         Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :type");
         maxQuery.setParameter("type", Result.Type.CGF);
-        maxId = (Long) maxQuery.getSingleResult();
+        maxId = (Integer) maxQuery.getSingleResult();
         if (maxId == null || maxId.longValue() == 0) {
             log.info("No Cgf Numbers, starting from 0!");
             checkFrom(new CgfGolferNumber(0));
