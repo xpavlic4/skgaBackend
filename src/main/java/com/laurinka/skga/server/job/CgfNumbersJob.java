@@ -40,13 +40,10 @@ public class CgfNumbersJob {
         if (maxId == null || maxId.longValue() == 0) {
             log.info("No Cgf Numbers, starting from 0!");
             checkFrom(new CgfGolferNumber(0));
-            return;
+        } else {
+            log.info("LastCgf is not empty, starting from " + maxId);
+            checkFrom(new CgfGolferNumber(maxId));
         }
-
-        Query query1 = em.createQuery("select m from CgfNumber m where m.id =:id");
-        query1.setParameter("id", Long.valueOf(maxId));
-        CgfNumber singleResult = (CgfNumber) query1.getSingleResult();
-        checkFrom(new CgfGolferNumber(singleResult.getNr()));
     }
 
     private void checkFrom(CgfGolferNumber from) throws IOException {
