@@ -44,7 +44,7 @@ public class CgfNumbersJob {
         }
 
         Query query1 = em.createQuery("select m from CgfNumber m where m.id =:id");
-        query1.setParameter("id", maxId);
+        query1.setParameter("id", Long.valueOf(maxId));
         CgfNumber singleResult = (CgfNumber) query1.getSingleResult();
         checkFrom(new CgfGolferNumber(singleResult.getNr()));
     }
