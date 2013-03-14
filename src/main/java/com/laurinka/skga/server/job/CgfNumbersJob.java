@@ -31,7 +31,7 @@ public class CgfNumbersJob {
     @Inject
     WebsiteService service;
 
-    @Schedule(persistent = false, hour = "*")
+    @Schedule(persistent = false, hour = "23-8", minute = "*/10")
     public void updateNumbers() throws IOException {
         Integer maxId;
         Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :type");
