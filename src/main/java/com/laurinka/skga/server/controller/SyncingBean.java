@@ -77,7 +77,7 @@ public class SyncingBean {
 
         String nr = t.nextToken();
         nr = nr.replaceAll("\"", "");
-        Query namedQuery = em.createNamedQuery("select m from CgfNumber where nr=:nr");
+        Query namedQuery = em.createQuery("select m from CgfNumber m where m.nr=:nr");
         namedQuery.setParameter("nr", nr);
         if (!namedQuery.getResultList().isEmpty()) {
             return;
