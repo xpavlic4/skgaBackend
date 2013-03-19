@@ -58,8 +58,14 @@ public class SyncingBean {
         BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
 
         String line;
+        int i = 0;
         while ((line = br.readLine()) != null) {
+            i++;
             process(line);
+            if (i % 10 == 0) {
+                em.flush();
+                log.info("processing " + i);
+            }
         }
     }
 
