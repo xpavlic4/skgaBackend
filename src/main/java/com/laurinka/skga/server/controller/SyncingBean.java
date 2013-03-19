@@ -11,6 +11,7 @@ import javax.ejb.Stateful;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,6 +77,11 @@ public class SyncingBean {
 
         String nr = t.nextToken();
         nr = nr.replaceAll("\"", "");
+        Query namedQuery = em.createNamedQuery("select m from CgfNumber where nr=:nr");
+        namedQuery.setParameter("nr", nr);
+        if (!namedQuery.getResultList().isEmpty()) {
+            return;
+        }
 
         CgfNumber cgfNumber = new CgfNumber();
         cgfNumber.setName(name);
