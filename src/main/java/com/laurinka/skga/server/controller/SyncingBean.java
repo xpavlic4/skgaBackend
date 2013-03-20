@@ -64,6 +64,7 @@ public class SyncingBean {
         String line;
         int i = 0;
         boolean b = true;
+        
         while ((line = br.readLine()) != null) {
             i++;
             if (b) {
