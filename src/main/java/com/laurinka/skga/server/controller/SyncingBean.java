@@ -12,6 +12,8 @@ import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,11 +59,19 @@ public class SyncingBean {
     public void save() throws IOException {
         InputStream resourceAsStream = SyncingBean.class.getResourceAsStream("/cgf.csv");
         BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
-
+        TypedQuery<CgfNumber> createQuery = em.createQuery("select m from CgfNumber m where m.id in (select max(id) from CgfNumber)", CgfNumber.class);
+        CgfNumber o = createQuery.getSingleResult();
         String line;
         int i = 0;
+        boolean b = true;
         while ((line = br.readLine()) != null) {
             i++;
+            if (b) {
+            	if (line.contains(o.getNr())) {
+            		b = false;
+            	}
+            	continue;
+            }
             process(line);
             if (i % 10 == 0) {
                 em.flush();
