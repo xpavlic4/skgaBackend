@@ -1,5 +1,14 @@
 package com.laurinka.skga.server.job;
 
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import javax.ejb.Schedule;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import com.laurinka.skga.server.model.CgfNumber;
 import com.laurinka.skga.server.model.LastSync;
 import com.laurinka.skga.server.model.Result;
@@ -8,14 +17,6 @@ import com.laurinka.skga.server.repository.ConfigurationRepository;
 import com.laurinka.skga.server.scratch.CgfGolferNumber;
 import com.laurinka.skga.server.services.WebsiteService;
 import com.laurinka.skga.server.utils.Utils;
-
-import javax.ejb.Schedule;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.io.IOException;
-import java.util.logging.Logger;
 
 @Stateless
 public class CgfNumbersJob {
@@ -30,7 +31,7 @@ public class CgfNumbersJob {
     @Inject
     WebsiteService service;
 
-    @Schedule(persistent = false, hour = "17-8", minute = "*/10", timezone = "Europe/Berlin")
+//    @Schedule(persistent = false, hour = "*", minute = "*/5")
     public void updateNumbers() throws IOException {
         Integer maxId;
         Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :type");
