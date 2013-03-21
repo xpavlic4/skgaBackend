@@ -8,55 +8,58 @@ import java.util.Date;
 @Entity
 @XmlRootElement
 @Table
-@NamedQuery(name = Snapshot.LAST20, query = "select s from Snapshot s order by s.id desc")
+@NamedQueries({
+		@NamedQuery(name = Snapshot.LAST20, query = "select s from Snapshot s order by s.id desc"),
+		@NamedQuery(name = Snapshot.BYNR, query = "select s from Snapshot s where s.result.skgaNr = :nr and createdAt >= :date")}
+		)
 public class Snapshot implements Serializable {
-    public static final String LAST20 = "snapshot.last20";
-    /**
-     * Default value included to remove warning. Remove or modify at will. *
-     */
-    private static final long serialVersionUID = 1L;
+	public static final String LAST20 = "snapshot.last20";
+	public static final String BYNR = "snapshot.byNr";
+	/**
+	 * Default value included to remove warning. Remove or modify at will. *
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    @Embedded
-    private Result result;
+	@Embedded
+	private Result result;
 
-    @Basic(optional = false)
-    private Date createdAt;
+	@Basic(optional = false)
+	private Date createdAt;
 
+	public Snapshot() {
+		setCreatedAt(new Date());
+	}
 
-    public Snapshot() {
-        setCreatedAt(new Date());
-    }
+	public Snapshot(Result aresult) {
+		this();
+		this.result = aresult;
+	}
 
-    public Snapshot(Result aresult) {
-        this();
-        this.result = aresult;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Result getResult() {
+		return result;
+	}
 
-    public Result getResult() {
-        return result;
-    }
+	public void setResult(Result result) {
+		this.result = result;
+	}
 
-    public void setResult(Result result) {
-        this.result = result;
-    }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 }
