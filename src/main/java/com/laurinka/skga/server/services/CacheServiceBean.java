@@ -32,7 +32,7 @@ public class CacheServiceBean implements CacheService {
 		q.setParameter("nr", nr.asString());
 		DateTime dateTime = new DateTime();
 		DateTime minusDays = dateTime.minusHours(1);
-		q.setParameter("date", minusDays);
+		q.setParameter("date", minusDays.toDate());
 		List<Snapshot> list = q.getResultList();
 		if (null == list || list.isEmpty()) {
 			return Optional.absent();
