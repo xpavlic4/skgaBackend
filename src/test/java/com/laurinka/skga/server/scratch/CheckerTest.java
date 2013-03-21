@@ -27,7 +27,12 @@ public class CheckerTest {
 		Result r  = new SkgaHCPChecker().query(new SkgaGolferNumber(99999));
 		Assert.assertTrue("Should be null as 1 not exists", r == null);
 	}
-	
+
+	@Test
+	public void test2323Handicap() throws IOException, ParseException {
+		Result r  = new SkgaHCPChecker().query(new SkgaGolferNumber(2323));
+		//Assert.assertTrue("Should be null as 1 not exists", r == null);
+	}
 	@Test
 	public void testCharset() throws IOException {
 		Result r  = new SkgaHCPChecker().query(new SkgaGolferNumber(4));
