@@ -32,7 +32,7 @@ public class CgfNamesUpdateJob {
 	WebsiteService service;
 
 	@SuppressWarnings("UnusedDeclaration")
-	@Schedule(persistent = false, hour = "*", minute = "*/5")
+//	@Schedule(persistent = false, hour = "*", minute = "*/5")
 	public void fixNames() throws IOException {
 		TypedQuery<CgfNumber> questionQuery = em.createQuery(
 				"select m from CgfNumber m where m.name2 like '%\\?%'",
