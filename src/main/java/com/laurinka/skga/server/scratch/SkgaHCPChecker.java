@@ -1,17 +1,14 @@
 package com.laurinka.skga.server.scratch;
+import com.laurinka.skga.server.model.Result;
 import java.io.IOException;
 import java.util.logging.Logger;
-
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.laurinka.skga.server.model.Result;
-
 public class SkgaHCPChecker {
-	Logger log = Logger.getLogger(SkgaHCPChecker.class.getName());
 
 	final String ID_HCP = "ctl00_RightContentPlaceholder_lbHcp";
 	final String ID_NR = "ctl00_RightContentPlaceholder_lbMemberNumber";
@@ -21,10 +18,10 @@ public class SkgaHCPChecker {
 		String url = "http://data.skga.sk/CheckHcp.aspx?MemberNumber=" + nr.asString()
 				+ "&button_dosearch=";
 		final Connection connect = Jsoup.connect(url);
-		connect.header("Accept-Charset", "utf-8");
+		connect.header("Accept-Charset", "UTF-8");
 		Document document = connect.get();
-		
-		
+
+
 		if (!isValid(document))
 			return null;
 		Result result = Result.newSkga();
