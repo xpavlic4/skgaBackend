@@ -14,35 +14,6 @@
             <iframe src="https://www.facebook.com/plugins/like.php?href=skga-radim.rhcloud.com"
                     scrolling="no" frameborder="0"
                     style="border:none; width:450px; height:80px"></iframe>
-            <p>
-                <h:panelGrid columns="3">
-                    <h:commandButton id="numbersSkga" action="#{syncingBean.syncNumbers}" value="Check SKGA numbers"/>
-                    <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
-                                globalOnly="true"/>
-                </h:panelGrid>
-            </p>
-
-            <p>
-                <h:panelGrid columns="3">
-                    <h:commandButton id="numbersCgf" action="#{syncingBean.syncCgfNumbers}" value="Check CGF numbers"/>
-                    <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
-                                globalOnly="true"/>
-                </h:panelGrid>
-            </p>
-
-            <p>
-                <h:panelGrid columns="3">
-                    <h:commandButton id="names" action="#{syncingBean.syncNames}" value="Check names"/>
-                </h:panelGrid>
-            </p>
-
-            <p>
-                <h:panelGrid columns="3">
-                    <h:commandButton action="#{syncingBean.fixCgfNames}" value="Fix Cgf names with question mark"/>
-                </h:panelGrid>
-            </p>
-
-
         </h:form>
         <h:dataTable value="#{members}" var="i" rendered="#{not empty members}">
             <h:column>
