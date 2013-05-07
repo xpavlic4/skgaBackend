@@ -6,3 +6,5 @@ gen
 .idea/*
 .idea
 *.iml
+.idea
+.idea\libraries
