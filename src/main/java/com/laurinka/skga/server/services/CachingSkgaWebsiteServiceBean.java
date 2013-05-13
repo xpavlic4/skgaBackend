@@ -23,10 +23,10 @@ public class CachingSkgaWebsiteServiceBean implements WebsiteService {
     @Override
     public Result findDetail(SkgaGolferNumber nr) {
         try {
-//        	Optional<Result> tmpRes = cache.find(nr);
-//        	if (tmpRes.isPresent()) {
-//        		return tmpRes.get();
-//        	}
+        	Optional<Result> tmpRes = cache.find(nr);
+        	if (tmpRes.isPresent()) {
+        		return tmpRes.get();
+        	}
             Result result = new SkgaHCPChecker().query(nr);
             if (null != result)
                 cache.cache(result);
