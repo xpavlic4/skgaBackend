@@ -48,6 +48,7 @@ public class SkgaHCPChecker {
 			return;
 		Element b = bs.iterator().next();
 		String text = b.text();
+        log.info("Name: " + text);
 		result.setName(text);
 	}
 
@@ -68,6 +69,7 @@ public class SkgaHCPChecker {
 
 	private void findClub(Document document, Result result) {
 		String club = document.getElementById(ID_CLUB).text();
+        log.info("Club: "+ club);
 		result.setClub(club);
 	}
 
