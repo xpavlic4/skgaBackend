@@ -20,8 +20,8 @@ public class SkgaHCPChecker {
 	public Result query(SkgaGolferNumber nr) throws IOException {
 		String url = "http://data.skga.sk/CheckHcp.aspx?MemberNumber=" + nr.asString()
 				+ "&button_dosearch=";
-		final Connection connect = Jsoup.connect(url);
-		connect.header("Accept-Charset", "utf-8");
+		final Connection connect = Jsoup.connect(url).timeout(5000);
+		connect.header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3");
 		Document document = connect.get();
 		
 		
