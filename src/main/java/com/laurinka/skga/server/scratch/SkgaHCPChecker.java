@@ -21,10 +21,10 @@ public class SkgaHCPChecker {
 	public Result query(SkgaGolferNumber nr) throws IOException {
 		String url = "http://data.skga.sk/CheckHcp.aspx?MemberNumber=" + nr.asString()
 				+ "&button_dosearch=";
-        Document document = Jsoup.parse(new URL(url).openStream(), "utf-8", url);
-//		final Connection connect = Jsoup.connect(url).timeout(5000);
-//		connect.header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3");
-//		Document document = connect.get();
+//        Document document = Jsoup.parse(new URL(url).openStream(), "utf-8", url);
+		final Connection connect = Jsoup.connect(url).timeout(5000);
+		connect.header("Accept-Charset", "utf-8");
+		Document document = connect.get();
 		
 		
 		if (!isValid(document))
