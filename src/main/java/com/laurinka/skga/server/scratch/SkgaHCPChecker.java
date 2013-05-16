@@ -1,5 +1,6 @@
 package com.laurinka.skga.server.scratch;
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Logger;
 
 import org.jsoup.Connection;
@@ -20,9 +21,10 @@ public class SkgaHCPChecker {
 	public Result query(SkgaGolferNumber nr) throws IOException {
 		String url = "http://data.skga.sk/CheckHcp.aspx?MemberNumber=" + nr.asString()
 				+ "&button_dosearch=";
-		final Connection connect = Jsoup.connect(url).timeout(5000);
-		connect.header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3");
-		Document document = connect.get();
+        Document document = Jsoup.parse(new URL(url).openStream(), "ISO-8859-2", url);
+//		final Connection connect = Jsoup.connect(url).timeout(5000);
+//		connect.header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.3");
+//		Document document = connect.get();
 		
 		
 		if (!isValid(document))
