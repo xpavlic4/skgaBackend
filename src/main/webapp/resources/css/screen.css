@@ -11,7 +11,7 @@ body {
     border: 1px solid #666666;
     width: 865px; /* subtract 40px from banner width for padding */
     background: #FFFFFF;
-    padding-top: 110px;
+    padding-top: 20px;
 }
 #sidebar {
     font-size: 0.9em;
