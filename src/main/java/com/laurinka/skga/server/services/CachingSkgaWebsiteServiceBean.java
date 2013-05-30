@@ -9,6 +9,7 @@ import com.laurinka.skga.server.scratch.SkgaHCPChecker;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -20,16 +21,21 @@ public class CachingSkgaWebsiteServiceBean implements WebsiteService {
     @Inject
     CacheService cache;
 
+    @Inject
+    EntityManager em;
+
     @Override
     public Result findDetail(SkgaGolferNumber nr) {
         try {
-        	Optional<Result> tmpRes = cache.find(nr);
-        	if (tmpRes.isPresent()) {
-        		return tmpRes.get();
-        	}
-            Result result = new SkgaHCPChecker().query(nr);
-            if (null != result)
-                cache.cache(result);
+            Result result;
+            Optional<Result> tmpRes = cache.find(nr);
+            if (tmpRes.isPresent()) {
+                return tmpRes.get();
+            } else {
+                result = new SkgaHCPChecker().query(nr);
+                if (null != result)
+                    cache.cache(result);
+            }
             return result;
         } catch (IOException e) {
             e.printStackTrace();
