@@ -44,6 +44,7 @@ public class SkgaMemberResourceRESTService {
 
         try {
             TypedQuery<SkgaNumber> skgaNmbr = em.createNamedQuery(SkgaNumber.BYNR, SkgaNumber.class);
+            skgaNmbr.setParameter("nr", aNr);
             SkgaNumber singleResult = skgaNmbr.getSingleResult();
             query.setName(singleResult.getName2());
         } catch (Exception e) {
