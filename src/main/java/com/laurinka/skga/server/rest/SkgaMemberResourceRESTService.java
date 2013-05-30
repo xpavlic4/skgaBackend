@@ -37,14 +37,15 @@ public class SkgaMemberResourceRESTService {
     @Produces("text/xml")
     public Hcp lookupMemberById(@PathParam("nr") String aNr) {
         Result query = null;
-        query = service.findDetail(new SkgaGolferNumber(aNr));
+        SkgaGolferNumber nr = new SkgaGolferNumber(aNr);
+        query = service.findDetail(nr);
         if (null == query)
             throw new WebApplicationException();
 
 
         try {
             TypedQuery<SkgaNumber> skgaNmbr = em.createNamedQuery(SkgaNumber.BYNR, SkgaNumber.class);
-            skgaNmbr.setParameter("nr", aNr);
+            skgaNmbr.setParameter("nr", nr.asString());
             SkgaNumber singleResult = skgaNmbr.getSingleResult();
             query.setName(singleResult.getName2());
         } catch (Exception e) {
