@@ -1,14 +1,18 @@
 package com.laurinka.skga.server.scratch;
-import com.laurinka.skga.server.model.Result;
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Logger;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.laurinka.skga.server.model.Result;
+
 public class SkgaHCPChecker {
+	Logger log = Logger.getLogger(SkgaHCPChecker.class.getName());
 
 	final String ID_HCP = "ctl00_RightContentPlaceholder_lbHcp";
 	final String ID_NR = "ctl00_RightContentPlaceholder_lbMemberNumber";
@@ -17,11 +21,12 @@ public class SkgaHCPChecker {
 	public Result query(SkgaGolferNumber nr) throws IOException {
 		String url = "http://data.skga.sk/CheckHcp.aspx?MemberNumber=" + nr.asString()
 				+ "&button_dosearch=";
-		final Connection connect = Jsoup.connect(url);
-		connect.header("Accept-Charset", "UTF-8");
+//        Document document = Jsoup.parse(new URL(url).openStream(), "utf-8", url);
+		final Connection connect = Jsoup.connect(url).timeout(5000);
+		connect.header("Accept-Charset", "utf-8");
 		Document document = connect.get();
-
-
+		
+		
 		if (!isValid(document))
 			return null;
 		Result result = Result.newSkga();
@@ -45,6 +50,7 @@ public class SkgaHCPChecker {
 			return;
 		Element b = bs.iterator().next();
 		String text = b.text();
+        log.info("Name: " + text);
 		result.setName(text);
 	}
 
@@ -65,6 +71,7 @@ public class SkgaHCPChecker {
 
 	private void findClub(Document document, Result result) {
 		String club = document.getElementById(ID_CLUB).text();
+        log.info("Club: "+ club);
 		result.setClub(club);
 	}
 
