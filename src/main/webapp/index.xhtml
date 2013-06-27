@@ -5,36 +5,41 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
-        <h1>Cskoslovensky golfovy handicap</h1>
+        <h1>Československý golfový handikep</h1>
 
         <h:form id="reg">
             <iframe src="https://www.facebook.com/plugins/like.php?href=skga-radim.rhcloud.com"
                     scrolling="no" frameborder="0"
                     style="border:none; width:450px; height:80px"></iframe>
         </h:form>
+        <h:form id="search">
+            <h:inputText value="#{search.q}"/>
+            <h:commandButton type="submit" value="Hledat"/>
 
-        <h2>Posledni dotazy:</h2>
 
-        <p>
-            <h:dataTable value="#{members}" var="i" rendered="#{not empty members}">
-                <h:column>
-                    <f:facet name="header">Jmeno</f:facet>
-                    <h:outputText value="#{i.result.name}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Cislo</f:facet>
-                    <h:outputText value="#{i.result.skgaNr}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Club</f:facet>
-                    <h:outputText value="#{i.result.club}"/>
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Handicap</f:facet>
-                    <h:outputText value="#{i.result.hcp}"/>
-                </h:column>
-            </h:dataTable>
-            <h:outputText value="No results" rendered="#{empty members}"/>
-        </p>
+            <h2>Výsledek hledání:</h2>
+
+            <p>
+                <h:dataTable value="#{results}" var="i" rendered="#{not empty results}">
+                    <h:column>
+                        <f:facet name="header">Jméno</f:facet>
+                        <h:outputText value="#{i.result.name}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Číslo</f:facet>
+                        <h:outputText value="#{i.result.skgaNr}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Klub</f:facet>
+                        <h:outputText value="#{i.result.club}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Hendikep</f:facet>
+                        <h:outputText value="#{i.result.hcp}"/>
+                    </h:column>
+                </h:dataTable>
+                <h:outputText value="Žádné záznamy" rendered="#{empty results}"/>
+            </p>
+        </h:form>
     </ui:define>
 </ui:composition>
