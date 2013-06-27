@@ -10,7 +10,7 @@ import static org.junit.Assert.assertThat;
 public class SearchMemberResourceRESTServiceTest {
     @Test
     public void splitNameAndSurname() {
-        String[] split = SearchMemberResourceRESTService.REGEX.split("radim pavlicek");
+        String[] split = AbstractMemberResourceRestService.REGEX.split("radim pavlicek");
         assertThat("" + Arrays.toString(split), split.length, is(2));
         assertThat(split[0], is("radim"));
     }

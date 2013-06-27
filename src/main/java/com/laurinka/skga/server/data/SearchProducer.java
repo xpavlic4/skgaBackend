@@ -16,6 +16,7 @@ import javax.persistence.Query;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 @RequestScoped
@@ -27,6 +28,8 @@ public class SearchProducer {
     private EntityManager em;
     @Inject
     private WebsiteService service;
+    @Inject
+    Logger log;
 
 
     private List<Snapshot> results;
@@ -42,26 +45,30 @@ public class SearchProducer {
     @PostConstruct
     public void retrieveLastSnapshotsOrderedByName() {
         if (null == q || q.isEmpty()) {
+            log.info("search sring is empty!");
             results = Collections.emptyList();
             return;
         }
-        Query namedQuery = null;
         if (number.matcher(q).matches()) {
+            log.info("User entered number on page:" + q);
             //search by number
             Result detailSk = service.findDetail(new SkgaGolferNumber(q));
             Result detailCz = service.findDetail(new CgfGolferNumber(q));
 
             if (null == detailCz && null == detailSk) {
+                log.info("Nothing found.");
                 results = Collections.emptyList();
                 return;
             }
             results = new LinkedList<Snapshot>();
             if (detailSk != null) {
+                log.info("Found sk:" + detailCz.toString());
                 Snapshot sk = new Snapshot();
                 sk.setResult(detailSk);
                 results.add(sk);
             }
             if (detailCz != null) {
+                log.info("Found cz: " + detailCz.toString());
                 Snapshot cz = new Snapshot();
                 cz.setResult(detailCz);
                 results.add(cz);
@@ -69,6 +76,7 @@ public class SearchProducer {
             return;
 
         } else {
+            log.warning("search by name not implemented yet!");
             // search by name
             results = Collections.emptyList();
         }
@@ -80,5 +88,9 @@ public class SearchProducer {
 
     public void setQ(String q) {
         this.q = q;
+    }
+
+    public void setService(WebsiteService service) {
+        this.service = service;
     }
 }
