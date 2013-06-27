@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 @RequestScoped
 @Named("search")
 public class SearchProducer {
+
     static Pattern number = Pattern.compile("\\d{1,7}");
     @Inject
     private EntityManager em;
