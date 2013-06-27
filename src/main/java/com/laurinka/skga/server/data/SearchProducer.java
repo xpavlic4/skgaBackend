@@ -62,7 +62,7 @@ public class SearchProducer {
             }
             results = new LinkedList<Snapshot>();
             if (detailSk != null) {
-                log.info("Found sk:" + detailCz.toString());
+                log.info("Found sk:" + detailSk.toString());
                 Snapshot sk = new Snapshot();
                 sk.setResult(detailSk);
                 results.add(sk);
