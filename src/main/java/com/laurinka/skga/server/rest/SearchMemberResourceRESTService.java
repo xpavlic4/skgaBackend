@@ -37,10 +37,10 @@ public class SearchMemberResourceRESTService {
     @Produces("text/xml")
     public List<NameNumberXml> lookupMemberById(@QueryParam("q") String q) {
         String[] split = REGEX.split(q);
-        String s2 = " and m.name2 like :name";
+        String s2 = "";
         int i = 0;
         for (String part : split) {
-            s2 += "and m.name2 like :name" + i;
+            s2 += " and m.name2 like :name" + i + " ";
         }
         String s = "select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from SkgaNumber m ";
         String s1 = "where m.name2 is not null ";
