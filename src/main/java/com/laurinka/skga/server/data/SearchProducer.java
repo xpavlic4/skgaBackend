@@ -45,7 +45,7 @@ public class SearchProducer {
     @PostConstruct
     public void retrieveLastSnapshotsOrderedByName() {
         if (null == q || q.isEmpty()) {
-            log.info("search sring is empty!");
+            log.info("search string is empty!");
             results = Collections.emptyList();
             return;
         }
