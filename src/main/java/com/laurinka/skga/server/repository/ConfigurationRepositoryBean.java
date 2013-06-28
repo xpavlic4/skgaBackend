@@ -25,6 +25,12 @@ public class ConfigurationRepositoryBean implements ConfigurationRepository {
         return Integer.parseInt(result.getValue());
     }
 
+    @Override
+    public int getNumberOfHoursToInvalidateCache() {
+        Configuration result = findConfiguration(Keys.NUMBER_OF_HOURS_TO_INVALIDATE_CACHE);
+        return Integer.parseInt(result.getValue());
+    }
+
     @PostConstruct
     public void init() {
         Configuration result = findConfiguration(Keys.NEW_NUMBERS_OFFSET);
@@ -36,6 +42,12 @@ public class ConfigurationRepositoryBean implements ConfigurationRepository {
         entity.setName(Keys.NEW_NUMBERS_OFFSET.name());
         entity.setValue("500");
         em.persist(entity);
+        em.flush();
+
+        Configuration e2 = new Configuration();
+        e2.setName(Keys.NUMBER_OF_HOURS_TO_INVALIDATE_CACHE.name());
+        e2.setValue("1");
+        em.persist(e2);
         em.flush();
     }
 

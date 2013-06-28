@@ -1,20 +1,19 @@
 package com.laurinka.skga.server.services;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import com.laurinka.skga.server.model.CgfNumber;
-import com.laurinka.skga.server.model.SkgaNumber;
+import com.laurinka.skga.server.model.*;
+import com.laurinka.skga.server.repository.ConfigurationRepository;
 import com.laurinka.skga.server.scratch.AsString;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Optional;
-import com.laurinka.skga.server.model.Result;
-import com.laurinka.skga.server.model.Snapshot;
 import com.laurinka.skga.server.scratch.CgfGolferNumber;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 
@@ -22,6 +21,10 @@ import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 public class CacheServiceBean implements CacheService {
 	@Inject
 	EntityManager em;
+    @Inject
+    Logger log;
+    @Inject
+    ConfigurationRepository config;
 
 	@Override
 	public void cache(Result r) {
@@ -49,7 +52,7 @@ public class CacheServiceBean implements CacheService {
         q.setParameter("nr", nr.asString());
         q.setParameter("system", skga);
         DateTime dateTime = new DateTime();
-        DateTime minusDays = dateTime.minusHours(1);
+        DateTime minusDays = dateTime.minusHours(config.getNumberOfHoursToInvalidateCache());
         q.setParameter("date", minusDays.toDate());
         return q.getResultList();
     }
