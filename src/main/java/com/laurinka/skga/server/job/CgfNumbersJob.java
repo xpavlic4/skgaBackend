@@ -1,6 +1,7 @@
 package com.laurinka.skga.server.job;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.Schedule;
@@ -8,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.laurinka.skga.server.model.CgfNumber;
 import com.laurinka.skga.server.model.LastSync;
@@ -80,6 +82,13 @@ public class CgfNumbersJob {
             Result detail = service.findDetail(nr);
             log.info("Checking " + nr.asString() + " ");
             if (null == detail) {
+                continue;
+            }
+            // if already in db -> skip
+            TypedQuery<CgfNumber> namedQuery = em.createNamedQuery(CgfNumber.BYNR, CgfNumber.class);
+            namedQuery.setParameter("nr", nr.asString());
+            List<CgfNumber> resultList = namedQuery.getResultList();
+            if (resultList.size() > 0) {
                 continue;
             }
             CgfNumber entity = new CgfNumber(nr.asString(), detail.getName());
