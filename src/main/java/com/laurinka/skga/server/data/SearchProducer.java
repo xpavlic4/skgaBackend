@@ -46,6 +46,10 @@ public class SearchProducer {
     private List<Snapshot> results;
 
     private String q;
+    @Inject
+    private SearchCgfResourceRESTService cgfSearch;
+    @Inject
+    private SearchMemberResourceRESTService skSearch;
 
     @Produces
     @Named
@@ -87,7 +91,7 @@ public class SearchProducer {
             return;
 
         } else {
-            SearchCgfResourceRESTService cgfSearch = new SearchCgfResourceRESTService();
+            cgfSearch = new SearchCgfResourceRESTService();
             List<NameNumberXml> czs = cgfSearch.lookupMemberByName(q);
             for (NameNumberXml n: czs) {
                 Hcp hcp = cgf.lookupMemberById(n.getNumber());
@@ -101,7 +105,7 @@ public class SearchProducer {
                 results.add(s);
             }
 
-            SearchMemberResourceRESTService skSearch = new SearchMemberResourceRESTService();
+            skSearch = new SearchMemberResourceRESTService();
             List<NameNumberXml> sks = skSearch.lookupMemberByName(q);
             for (NameNumberXml n: sks) {
                 Hcp hcp = cgf.lookupMemberById(n.getNumber());
