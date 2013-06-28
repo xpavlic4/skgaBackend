@@ -133,9 +133,7 @@ public class SearchProducer {
                 results.add(s);
             }
 
-            // search by name
-            results = Collections.emptyList();
-        }
+      }
     }
 
     public String getQ() {
