@@ -2,11 +2,9 @@ package com.laurinka.skga.server.rest;
 
 import com.laurinka.skga.server.rest.model.NameNumberXml;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -14,10 +12,6 @@ import java.util.regex.Pattern;
  */
 public class AbstractMemberResourceRestService {
     static Pattern REGEX = Pattern.compile("\\s+");
-    @Inject
-    private EntityManager em;
-    @Inject
-    private Logger log;
     /**
      * Splits search string into chunks and construct clauses in sql.
      * <pre>
@@ -28,10 +22,9 @@ public class AbstractMemberResourceRestService {
      *     }
      * </pre>
      */
-    protected List<NameNumberXml> getNameNumberXmls(String q, String s) {
+    protected List<NameNumberXml> getNameNumberXmls(String q, String s, EntityManager em) {
         String[] split = REGEX.split(q);
         String sql = generateSql(s, split);
-//        log.info(String.format("Sql: %s", sql));
         TypedQuery<NameNumberXml> query = em
                 .createQuery(sql, NameNumberXml.class);
         int j = 0;

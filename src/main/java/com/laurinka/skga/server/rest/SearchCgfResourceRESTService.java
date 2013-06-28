@@ -21,12 +21,14 @@ import java.util.List;
 @Path("/cgfs")
 @RequestScoped
 public class SearchCgfResourceRESTService extends AbstractMemberResourceRestService {
+    @Inject
+    private EntityManager em;
 
     @GET
     @Path("/search")
     @Produces("text/xml")
     public List<NameNumberXml> lookupMemberByName(@QueryParam("q") String q) {
         String s = "select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from CgfNumber m ";
-        return getNameNumberXmls(q, s);
+        return getNameNumberXmls(q, s, em);
     }
 }
