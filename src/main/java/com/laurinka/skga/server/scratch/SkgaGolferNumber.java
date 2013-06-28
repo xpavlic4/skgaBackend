@@ -1,6 +1,6 @@
 package com.laurinka.skga.server.scratch;
 
-public class SkgaGolferNumber {
+public class SkgaGolferNumber implements AsString {
     int i;
 
     public SkgaGolferNumber(String tmp) {
@@ -14,6 +14,7 @@ public class SkgaGolferNumber {
 
     }
 
+    @Override
     public String asString() {
         String s = "000000" + i;
         return s.substring(s.length() - 5, s.length());

@@ -10,11 +10,11 @@ import java.util.Date;
 @Table
 @NamedQueries({
 		@NamedQuery(name = Snapshot.LAST20, query = "select s from Snapshot s order by s.id desc"),
-		@NamedQuery(name = Snapshot.BYNR, query = "select s from Snapshot s where s.result.skgaNr = :nr and createdAt >= :date")}
+		@NamedQuery(name = Snapshot.BY_NR, query = "select s from Snapshot s where s.result.skgaNr = :nr and createdAt >= :date and s.result.type=:system order by createdAt desc")}
 		)
 public class Snapshot implements Serializable {
 	public static final String LAST20 = "snapshot.last20";
-	public static final String BYNR = "snapshot.byNr";
+	public static final String BY_NR = "snapshot.bynr";
 	/**
 	 * Default value included to remove warning. Remove or modify at will. *
 	 */

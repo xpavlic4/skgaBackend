@@ -2,6 +2,12 @@ package com.laurinka.skga.server.data;
 
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.Snapshot;
+import com.laurinka.skga.server.rest.CgfMemberResourceRESTService;
+import com.laurinka.skga.server.rest.SearchCgfResourceRESTService;
+import com.laurinka.skga.server.rest.SearchMemberResourceRESTService;
+import com.laurinka.skga.server.rest.SkgaMemberResourceRESTService;
+import com.laurinka.skga.server.rest.model.Hcp;
+import com.laurinka.skga.server.rest.model.NameNumberXml;
 import com.laurinka.skga.server.scratch.CgfGolferNumber;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.services.WebsiteService;
@@ -12,7 +18,6 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +35,12 @@ public class SearchProducer {
     private WebsiteService service;
     @Inject
     Logger log;
+
+    @Inject
+    SkgaMemberResourceRESTService skga;
+
+    @Inject
+    CgfMemberResourceRESTService cgf;
 
 
     private List<Snapshot> results;
@@ -76,7 +87,34 @@ public class SearchProducer {
             return;
 
         } else {
-            log.warning("search by name not implemented yet!");
+            SearchCgfResourceRESTService cgfSearch = new SearchCgfResourceRESTService();
+            List<NameNumberXml> czs = cgfSearch.lookupMemberByName(q);
+            for (NameNumberXml n: czs) {
+                Hcp hcp = cgf.lookupMemberById(n.getNumber());
+                Snapshot s = new Snapshot();
+                Result result = Result.newCgf();
+                result.setClub(hcp.getClub());
+                result.setHcp(hcp.getHandicap());
+                result.setName(hcp.getName());
+                result.setSkgaNr(hcp.getNumber());
+                s.setResult(result);
+                results.add(s);
+            }
+
+            SearchMemberResourceRESTService skSearch = new SearchMemberResourceRESTService();
+            List<NameNumberXml> sks = skSearch.lookupMemberByName(q);
+            for (NameNumberXml n: sks) {
+                Hcp hcp = cgf.lookupMemberById(n.getNumber());
+                Snapshot s = new Snapshot();
+                Result result = Result.newSkga();
+                result.setClub(hcp.getClub());
+                result.setHcp(hcp.getHandicap());
+                result.setName(hcp.getName());
+                result.setSkgaNr(hcp.getNumber());
+                s.setResult(result);
+                results.add(s);
+            }
+
             // search by name
             results = Collections.emptyList();
         }
