@@ -31,14 +31,23 @@ public class CgfNumbersJob {
     @Inject
     WebsiteService service;
 
-//    @Schedule(persistent = false, hour = "*", minute = "*/5")
+    @Schedule(persistent = false, hour = "1", minute = "1", dayOfMonth = "1", month = "*/2")
+    public void deleteCgf() {
+        Query query = em.createQuery("delete from LastSync m where m.type=:type");
+        query.setParameter("type", Result.Type.CGF);
+        int i = query.executeUpdate();
+        log.info("Table LastSunc deleted. Number of affected entries:" + i);
+    }
+
+
+    @Schedule(persistent = false, hour = "*", minute = "*/5")
     public void updateNumbers() throws IOException {
         Integer maxId;
         Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :type");
         maxQuery.setParameter("type", Result.Type.CGF);
         maxId = (Integer) maxQuery.getSingleResult();
         if (maxId == null || maxId.longValue() == 0) {
-            log.info("No Cgf Numbers, starting from 0!");
+            log.info("No Cgf Numbers in LastSync, starting from 0!");
             checkFrom(new CgfGolferNumber(0));
         } else {
             log.info("LastCgf is not empty, starting from " + maxId);
