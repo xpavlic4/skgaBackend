@@ -26,7 +26,7 @@ public class CacheServiceBean implements CacheService {
     @Inject
     ConfigurationRepository config;
 
-	@Override
+    @Override
 	public void cache(Result r) {
 		em.persist(new Snapshot(r));
 	}

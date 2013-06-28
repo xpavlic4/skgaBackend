@@ -31,10 +31,10 @@ public class CgfNumbersJob {
     @Inject
     WebsiteService service;
 
-    @Schedule(persistent = false, hour = "1", minute = "1", dayOfMonth = "1", month = "*/2")
+    @Schedule(persistent = false, hour = "1", minute = "1", dayOfMonth = "1", month = "1,2,3,4,5,6,7,8,9,10,11")
     public void deleteCgf() {
-        Query query = em.createQuery("delete from LastSync m where m.type=:type");
-        query.setParameter("type", Result.Type.CGF);
+        Query query = em.createQuery("delete from LastSync m where m.type=:system");
+        query.setParameter("system", Result.Type.CGF);
         int i = query.executeUpdate();
         log.info("Table LastSunc deleted. Number of affected entries:" + i);
     }
@@ -43,8 +43,8 @@ public class CgfNumbersJob {
     @Schedule(persistent = false, hour = "*", minute = "*/5")
     public void updateNumbers() throws IOException {
         Integer maxId;
-        Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :type");
-        maxQuery.setParameter("type", Result.Type.CGF);
+        Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :system");
+        maxQuery.setParameter("system", Result.Type.CGF);
         maxId = (Integer) maxQuery.getSingleResult();
         if (maxId == null || maxId.longValue() == 0) {
             log.info("No Cgf Numbers in LastSync, starting from 0!");
