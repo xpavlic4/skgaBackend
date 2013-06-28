@@ -22,13 +22,10 @@ import com.laurinka.skga.server.services.WebsiteService;
 @RequestScoped
 public class SearchMemberResourceRESTService extends AbstractMemberResourceRestService{
 
-    @Inject
-    private WebsiteService service;
-
     @GET
     @Path("/search")
     @Produces("text/xml")
-    public List<NameNumberXml> lookupMemberById(@QueryParam("q") String q) {
+    public List<NameNumberXml> lookupMemberByName(@QueryParam("q") String q) {
         String s = "select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from SkgaNumber m ";
         return getNameNumberXmls(q, s);
     }

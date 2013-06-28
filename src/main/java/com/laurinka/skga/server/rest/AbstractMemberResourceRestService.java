@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -15,6 +16,8 @@ public class AbstractMemberResourceRestService {
     static Pattern REGEX = Pattern.compile("\\s+");
     @Inject
     private EntityManager em;
+    @Inject
+    Logger log;
     /**
      * Splits search string into chunks and construct clauses in sql.
      * <pre>
@@ -27,24 +30,31 @@ public class AbstractMemberResourceRestService {
      */
     protected List<NameNumberXml> getNameNumberXmls(String q, String s) {
         String[] split = REGEX.split(q);
-        String s2 = "";
-        int i = 0;
-        for (String part : split) {
-            s2 += " and m.name2 like :name" + i + " ";
-        }
-        String s1 = "where m.name2 is not null ";
-        String s3 = " order by m.nr desc";
-        String sql = s
-                + s1
-                + s2 + s3;
+        String sql = generateSql(s, split);
+        log.info(String.format("Sql: %s", sql));
         TypedQuery<NameNumberXml> query = em
                 .createQuery(sql, NameNumberXml.class);
         int j = 0;
         for (String part : split) {
             query = query
                     .setParameter("name" + j, "%" + part + "%");
+            j++;
         }
         return query.setMaxResults(30)
                 .getResultList();
+    }
+
+    protected String generateSql(String s, String[] split) {
+        String s2 = "";
+        int i = 0;
+        for (String part : split) {
+            s2 += " and m.name2 like :name" + i + " ";
+            i++;
+        }
+        String s1 = "where m.name2 is not null ";
+        String s3 = " order by m.nr desc";
+        return s
+                + s1
+                + s2 + s3;
     }
 }
