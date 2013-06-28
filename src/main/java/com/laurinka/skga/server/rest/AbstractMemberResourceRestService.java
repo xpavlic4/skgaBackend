@@ -17,7 +17,7 @@ public class AbstractMemberResourceRestService {
     @Inject
     private EntityManager em;
     @Inject
-    Logger log;
+    private Logger log;
     /**
      * Splits search string into chunks and construct clauses in sql.
      * <pre>
@@ -31,7 +31,7 @@ public class AbstractMemberResourceRestService {
     protected List<NameNumberXml> getNameNumberXmls(String q, String s) {
         String[] split = REGEX.split(q);
         String sql = generateSql(s, split);
-        log.info(String.format("Sql: %s", sql));
+//        log.info(String.format("Sql: %s", sql));
         TypedQuery<NameNumberXml> query = em
                 .createQuery(sql, NameNumberXml.class);
         int j = 0;
