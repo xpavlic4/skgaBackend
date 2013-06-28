@@ -11,7 +11,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import com.laurinka.skga.server.rest.model.NameNumberXml;
-import com.laurinka.skga.server.services.WebsiteService;
 
 /**
  * JAX-RS Example
@@ -21,14 +20,16 @@ import com.laurinka.skga.server.services.WebsiteService;
  */
 @Path("/members")
 @RequestScoped
-public class SearchMemberResourceRESTService extends AbstractMemberResourceRestService{
+public class SearchMemberResourceRESTService extends AbstractMemberResourceRestService {
+    @Inject
+    EntityManager em;
 
     @GET
     @Path("/search")
     @Produces("text/xml")
     public List<NameNumberXml> lookupMemberByName(@QueryParam("q") String q) {
         String s = "select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from SkgaNumber m ";
-        return getNameNumberXmls(q, s);
+        return getNameNumberXmls(q, s, em);
     }
 
 }
