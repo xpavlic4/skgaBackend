@@ -91,6 +91,7 @@ public class SearchProducer {
             return;
 
         } else {
+            results = new LinkedList<Snapshot>();
             List<NameNumberXml> czs = cgfSearch.lookupMemberByName(q);
             for (NameNumberXml n : czs) {
                 Hcp hcp = cgf.lookupMemberById(n.getNumber());
