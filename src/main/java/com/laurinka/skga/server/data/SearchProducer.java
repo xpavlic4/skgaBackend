@@ -18,6 +18,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.ws.rs.WebApplicationException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -94,7 +95,13 @@ public class SearchProducer {
             results = new LinkedList<Snapshot>();
             List<NameNumberXml> czs = cgfSearch.lookupMemberByName(q);
             for (NameNumberXml n : czs) {
-                Hcp hcp = cgf.lookupMemberById(n.getNumber());
+                log.info("Query cgf: " + n.getNumber());
+                Hcp hcp = null;
+                try {
+                    hcp = cgf.lookupMemberById(n.getNumber());
+                } catch (WebApplicationException e) {
+                    log.warning(e.getLocalizedMessage());
+                }
                 Snapshot s = new Snapshot();
                 Result result = Result.newCgf();
                 result.setClub(hcp.getClub());
@@ -107,7 +114,13 @@ public class SearchProducer {
 
             List<NameNumberXml> sks = skSearch.lookupMemberByName(q);
             for (NameNumberXml n : sks) {
-                Hcp hcp = cgf.lookupMemberById(n.getNumber());
+                log.info("Query skga: " + n.getNumber());
+                Hcp hcp = null;
+                try {
+                    hcp = cgf.lookupMemberById(n.getNumber());
+                } catch (WebApplicationException e) {
+                    log.warning(e.getLocalizedMessage());
+                }
                 Snapshot s = new Snapshot();
                 Result result = Result.newSkga();
                 result.setClub(hcp.getClub());
