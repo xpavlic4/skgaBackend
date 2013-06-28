@@ -93,6 +93,7 @@ public class SearchProducer {
 
         } else {
             results = new LinkedList<Snapshot>();
+            log.info("searching cgf by q:" + q);
             List<NameNumberXml> czs = cgfSearch.lookupMemberByName(q);
             for (NameNumberXml n : czs) {
                 log.info("Query cgf: " + n.getNumber());
@@ -100,7 +101,7 @@ public class SearchProducer {
                 try {
                     hcp = cgf.lookupMemberById(n.getNumber());
                 } catch (WebApplicationException e) {
-                    log.warning(e.getLocalizedMessage());
+                    log.warning(n.getNumber() + ":" + e.getLocalizedMessage());
                     continue;
                 }
                 Snapshot s = new Snapshot();
@@ -112,15 +113,15 @@ public class SearchProducer {
                 s.setResult(result);
                 results.add(s);
             }
-
+            log.info("search by skg:" + q);
             List<NameNumberXml> sks = skSearch.lookupMemberByName(q);
             for (NameNumberXml n : sks) {
                 log.info("Query skga: " + n.getNumber());
                 Hcp hcp = null;
                 try {
-                    hcp = cgf.lookupMemberById(n.getNumber());
+                    hcp = skga.lookupMemberById(n.getNumber());
                 } catch (WebApplicationException e) {
-                    log.warning(e.getLocalizedMessage());
+                    log.warning(n.getNumber() + ":" + e.getLocalizedMessage());
                     continue;
                 }
                 Snapshot s = new Snapshot();
@@ -133,7 +134,7 @@ public class SearchProducer {
                 results.add(s);
             }
 
-      }
+        }
     }
 
     public String getQ() {
