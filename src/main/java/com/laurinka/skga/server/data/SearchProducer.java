@@ -101,6 +101,7 @@ public class SearchProducer {
                     hcp = cgf.lookupMemberById(n.getNumber());
                 } catch (WebApplicationException e) {
                     log.warning(e.getLocalizedMessage());
+                    continue;
                 }
                 Snapshot s = new Snapshot();
                 Result result = Result.newCgf();
@@ -120,6 +121,7 @@ public class SearchProducer {
                     hcp = cgf.lookupMemberById(n.getNumber());
                 } catch (WebApplicationException e) {
                     log.warning(e.getLocalizedMessage());
+                    continue;
                 }
                 Snapshot s = new Snapshot();
                 Result result = Result.newSkga();
