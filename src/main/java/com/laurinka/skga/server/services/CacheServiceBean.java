@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
+import com.laurinka.skga.server.model.SkgaNumber;
 import org.joda.time.DateTime;
 
 import com.google.common.base.Optional;
@@ -37,7 +38,12 @@ public class CacheServiceBean implements CacheService {
 		if (null == list || list.isEmpty()) {
 			return Optional.absent();
 		}
-		return Optional.of(list.get(0).getResult());
+        Result result = list.get(0).getResult();
+        TypedQuery<SkgaNumber> namedQuery = em.createNamedQuery(SkgaNumber.BYNR, SkgaNumber.class);
+        namedQuery.setParameter("nr", nr.asString());
+        SkgaNumber singleResult = namedQuery.getSingleResult();
+        result.setName(singleResult.getName2());
+        return Optional.of(result);
 
 	}
 
