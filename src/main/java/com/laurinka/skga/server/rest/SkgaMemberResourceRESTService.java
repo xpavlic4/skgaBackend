@@ -10,6 +10,7 @@ import com.laurinka.skga.server.utils.Utils;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import java.util.logging.Logger;
@@ -49,6 +50,8 @@ public class SkgaMemberResourceRESTService {
             skgaNmbr.setParameter("nr", nr.asString());
             SkgaNumber singleResult = skgaNmbr.getSingleResult();
             query.setName(singleResult.getName2());
+        } catch (NoResultException ne) {
+            log.info("No skga number found: " + nr.asString());
         } catch (Exception e) {
             e.printStackTrace();
             log.info("Unsuccesfull " + e.getCause());
