@@ -1,6 +1,7 @@
 package com.laurinka.skga.server.rest;
 
 import com.laurinka.skga.server.rest.model.NameNumberXml;
+import com.laurinka.skga.server.utils.Utils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -23,6 +24,7 @@ public class AbstractMemberResourceRestService {
      * </pre>
      */
     protected List<NameNumberXml> getNameNumberXmls(String q, String s, EntityManager em) {
+        q = Utils.stripAccents(q);
         String[] split = REGEX.split(q);
         String sql = generateSql(s, split);
         TypedQuery<NameNumberXml> query = em

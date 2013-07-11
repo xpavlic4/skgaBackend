@@ -13,6 +13,7 @@ import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.rest.model.Hcp;
 import com.laurinka.skga.server.scratch.CgfGolferNumber;
 import com.laurinka.skga.server.services.WebsiteService;
+import com.laurinka.skga.server.utils.Utils;
 
 /**
  * JAX-RS Example
@@ -42,7 +43,7 @@ public class CgfMemberResourceRESTService {
 		hcp.setHandicap(query.getHcp());
 		hcp.setNumber(query.getSkgaNr());
 		hcp.setName(query.getName());
-		hcp.setClub(query.getClub());
+		hcp.setClub(Utils.stripAccents(query.getClub()));
 		return hcp;
 	}
 }

@@ -5,6 +5,7 @@ import com.laurinka.skga.server.model.SkgaNumber;
 import com.laurinka.skga.server.rest.model.Hcp;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.services.WebsiteService;
+import com.laurinka.skga.server.utils.Utils;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -36,7 +37,7 @@ public class SkgaMemberResourceRESTService {
     @Path("/{nr:[0-9][0-9]*}")
     @Produces("text/xml")
     public Hcp lookupMemberById(@PathParam("nr") String aNr) {
-        Result query = null;
+        Result query;
         SkgaGolferNumber nr = new SkgaGolferNumber(aNr);
         query = service.findDetail(nr);
         if (null == query)
@@ -58,7 +59,7 @@ public class SkgaMemberResourceRESTService {
         hcp.setHandicap(query.getHcp());
         hcp.setNumber(query.getSkgaNr());
         hcp.setName(query.getName());
-        hcp.setClub(query.getClub());
+        hcp.setClub(Utils.stripAccents(query.getClub()));
         return hcp;
     }
 }
