@@ -37,28 +37,31 @@ public class CgfNamesUpdateJob {
 		TypedQuery<CgfNumber> questionQuery = em.createQuery(
 				"select m from CgfNumber m where m.name2 like '%\\?%'",
 				CgfNumber.class);
-		questionQuery.setMaxResults(10);
 		List<CgfNumber> resultList = questionQuery.getResultList();
 		if (null == resultList || resultList.isEmpty()) {
 			log.info("No corrupted names need to be update. ");
 			return;
 		}
+        int i = 0;
 		for (CgfNumber s : resultList) {
-			process(s);
+			i = process(s, i);
+            if (i > 10)
+                break;
 		}
 	}
 
-	public void process(CgfNumber s) {
+	public int process(CgfNumber s, int i) {
 		CgfGolferNumber nr = new CgfGolferNumber(s.getNr());
 		Result detail = service.findDetail(nr);
 		log.info("Checking " + nr.asString() + " ");
 		if (null == detail) {
-			return;
+			return i;
 		}
 		log.info("Updating with " + detail.toString());
 		s.setDate(new Date());
 		s.setName(detail.getName());
 		s.setName2(Utils.stripAccents(detail.getName()));
 		em.merge(s);
+        return ++i;
 	}
 }
