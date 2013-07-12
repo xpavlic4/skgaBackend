@@ -6,7 +6,8 @@
                 template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
         <h1>SKGA handicap</h1>
-
+        <h:form>
+            <h:commandButton value="Fix Cgf names" action="#{syncingBean.fixCgfNames}"/>
         <h2>Members</h2>
         <h:panelGroup rendered="#{empty members}">
             <em>No registered members.</em>
@@ -28,13 +29,14 @@
                 <f:facet name="header">Hendikep</f:facet>
                 <h:outputText value="#{_member.result.hcp}"/>
             </h:column>
-            <h:column>
-            <f:facet name="header">REST URL</f:facet>
-            <a href="#{request.contextPath}/rest/members/#{_member.nr}">/rest/members/#{_member.nr}</a>
-        </h:column>
-            <f:facet name="footer">
-                REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>
-            </f:facet>
+            <!--<h:column>-->
+            <!--<f:facet name="header">REST URL</f:facet>-->
+            <!--<a href="#{request.contextPath}/rest/members/#{_member.result.skgaNr}">/rest/members/#{_member.nr}</a>-->
+        <!--</h:column>-->
+            <!--<f:facet name="footer">-->
+                <!--REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>-->
+            <!--</f:facet>-->
         </h:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>
