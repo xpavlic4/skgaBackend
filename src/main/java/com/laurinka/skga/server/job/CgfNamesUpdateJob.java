@@ -21,44 +21,49 @@ import com.laurinka.skga.server.utils.Utils;
 @Stateless
 public class CgfNamesUpdateJob {
 
-	@Inject
-	private EntityManager em;
+    @Inject
+    private EntityManager em;
 
-	@Inject
-	Logger log;
-	@Inject
-	ConfigurationRepository config;
-	@Inject
-	WebsiteService service;
+    @Inject
+    Logger log;
+    @Inject
+    ConfigurationRepository config;
+    @Inject
+    WebsiteService service;
 
-	@SuppressWarnings("UnusedDeclaration")
-//	@Schedule(persistent = false, hour = "*", minute = "*/5")
-	public void fixNames() throws IOException {
-		TypedQuery<CgfNumber> questionQuery = em.createQuery(
-				"select m from CgfNumber m where m.name2 like '%\\?%'",
-				CgfNumber.class);
-		questionQuery.setMaxResults(10);
-		List<CgfNumber> resultList = questionQuery.getResultList();
-		if (null == resultList || resultList.isEmpty()) {
-			log.info("No corrupted names need to be update. ");
-			return;
-		}
-		for (CgfNumber s : resultList) {
-			process(s);
-		}
-	}
+    @SuppressWarnings("UnusedDeclaration")
+    @Schedule(persistent = false, hour = "*", minute = "*/5")
+    public void fixNames() throws IOException {
+        TypedQuery<CgfNumber> questionQuery = em.createQuery(
+                "select m from CgfNumber m where m.name2 like '%\\?%'  order by m.date asc",
+                CgfNumber.class);
+        List<CgfNumber> resultList = questionQuery.getResultList();
+        if (null == resultList || resultList.isEmpty()) {
+            log.info("No corrupted names need to be update. ");
+            return;
+        }
+        int i = 0;
+        for (CgfNumber s : resultList) {
+            i = process(s, i);
+            if (i > 10)
+                break;
+        }
+    }
 
-	private void process(CgfNumber s) {
-		CgfGolferNumber nr = new CgfGolferNumber(s.getNr());
-		Result detail = service.findDetail(nr);
-		log.info("Checking " + nr.asString() + " ");
-		if (null == detail) {
-			return;
-		}
-		log.info("Updating with " + detail.toString());
-		s.setDate(new Date());
-		s.setName(detail.getName());
-		s.setName2(Utils.stripAccents(detail.getName()));
-		em.merge(s);
-	}
+    public int process(CgfNumber s, int i) {
+        CgfGolferNumber nr = new CgfGolferNumber(s.getNr());
+        Result detail = service.findDetail(nr);
+        log.info("Checking " + nr.asString() + " ");
+        s.setDate(new Date());
+        if (null == detail) {
+            em.merge(s);
+            return i;
+        }
+        log.info("Updating with " + detail.toString());
+        s.setDate(new Date());
+        s.setName(detail.getName());
+        s.setName2(Utils.stripAccents(detail.getName()));
+        em.merge(s);
+        return ++i;
+    }
 }

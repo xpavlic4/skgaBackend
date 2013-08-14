@@ -8,8 +8,13 @@ import java.util.Date;
 @Entity
 @XmlRootElement
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "nr"))
+@NamedQueries({
+        @NamedQuery(name = CgfNumber.BYNR, query = "select s from CgfNumber s where s.nr = :nr")}
+)
+
 public class CgfNumber implements Serializable {
 
+    public static final String BYNR = "cgfnumber.bynr";
     @Id
     @GeneratedValue
     private Long id;

@@ -6,27 +6,37 @@
                 template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
         <h1>SKGA handicap</h1>
-
+        <h:form>
+            <h:commandButton value="Fix Cgf names" action="#{syncingBean.fixCgfNames}"/>
         <h2>Members</h2>
         <h:panelGroup rendered="#{empty members}">
             <em>No registered members.</em>
         </h:panelGroup>
-        <h:dataTable var="_member" value="#{members}" rendered="#{not empty members}">
+        <h:dataTable var="_member" value="#{members}" rendered="#{not empty members}" cellspacing="1" bgcolor="grey">
             <h:column>
-                <f:facet name="header">Id</f:facet>
-                #{_member.id}
+                <f:facet name="header">Jméno</f:facet>
+                <h:outputText value="#{_member.result.name}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">Number</f:facet>
-                #{_member.nr}
+                <f:facet name="header">Číslo</f:facet>
+                <h:outputText value="#{_member.result.skgaNr}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">REST URL</f:facet>
-                <a href="#{request.contextPath}/rest/members/#{_member.nr}">/rest/members/#{_member.nr}</a>
+                <f:facet name="header">Klub</f:facet>
+                <h:outputText value="#{_member.result.club}"/>
             </h:column>
-            <f:facet name="footer">
-                REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>
-            </f:facet>
+            <h:column>
+                <f:facet name="header">Hendikep</f:facet>
+                <h:outputText value="#{_member.result.hcp}"/>
+            </h:column>
+            <!--<h:column>-->
+            <!--<f:facet name="header">REST URL</f:facet>-->
+            <!--<a href="#{request.contextPath}/rest/members/#{_member.result.skgaNr}">/rest/members/#{_member.nr}</a>-->
+        <!--</h:column>-->
+            <!--<f:facet name="footer">-->
+                <!--REST URL for all members: <a href="#{request.contextPath}/rest/members">/rest/members</a>-->
+            <!--</f:facet>-->
         </h:dataTable>
+        </h:form>
     </ui:define>
 </ui:composition>

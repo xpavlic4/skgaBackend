@@ -10,4 +10,8 @@ public class Utils {
 		s = s.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
 		return s;
 	}
+
+    public static String onlyNumber(String a) {
+        return a.replaceAll("[^\\d]","");
+    }
 }

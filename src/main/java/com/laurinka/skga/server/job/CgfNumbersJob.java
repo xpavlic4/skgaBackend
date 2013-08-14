@@ -1,6 +1,7 @@
 package com.laurinka.skga.server.job;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ejb.Schedule;
@@ -8,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import com.laurinka.skga.server.model.CgfNumber;
 import com.laurinka.skga.server.model.LastSync;
@@ -31,14 +33,23 @@ public class CgfNumbersJob {
     @Inject
     WebsiteService service;
 
-//    @Schedule(persistent = false, hour = "*", minute = "*/5")
+    @Schedule(persistent = false, hour = "1", minute = "1", dayOfMonth = "1", month = "1,2,3,4,5,6,7,8,9,10,11")
+    public void deleteCgf() {
+        Query query = em.createQuery("delete from LastSync m where m.type=:system");
+        query.setParameter("system", Result.Type.CGF);
+        int i = query.executeUpdate();
+        log.info("Table LastSunc deleted. Number of affected entries:" + i);
+    }
+
+
+    @Schedule(persistent = false, hour = "*", minute = "*/5")
     public void updateNumbers() throws IOException {
         Integer maxId;
-        Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :type");
-        maxQuery.setParameter("type", Result.Type.CGF);
+        Query maxQuery = em.createQuery("select max(m.nr) from LastSync m where m.type = :system");
+        maxQuery.setParameter("system", Result.Type.CGF);
         maxId = (Integer) maxQuery.getSingleResult();
         if (maxId == null || maxId.longValue() == 0) {
-            log.info("No Cgf Numbers, starting from 0!");
+            log.info("No Cgf Numbers in LastSync, starting from 0!");
             checkFrom(new CgfGolferNumber(0));
         } else {
             log.info("LastCgf is not empty, starting from " + maxId);
@@ -71,6 +82,13 @@ public class CgfNumbersJob {
             Result detail = service.findDetail(nr);
             log.info("Checking " + nr.asString() + " ");
             if (null == detail) {
+                continue;
+            }
+            // if already in db -> skip
+            TypedQuery<CgfNumber> namedQuery = em.createNamedQuery(CgfNumber.BYNR, CgfNumber.class);
+            namedQuery.setParameter("nr", nr.asString());
+            List<CgfNumber> resultList = namedQuery.getResultList();
+            if (resultList.size() > 0) {
                 continue;
             }
             CgfNumber entity = new CgfNumber(nr.asString(), detail.getName());
