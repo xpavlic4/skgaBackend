@@ -12,3 +12,5 @@
 # prevent your application from stopping cleanly or starting at all.
 # Application start and stop is subject to different timeouts
 # throughout the system.
+
+export _JAVA_OPTIONS="$_JAVA_OPTIONS -javaagent:/var/lib/openshift/8c4d2287b8574118b927c41271dad6b5/app-root/repo/newrelic/newrelic.jar"
