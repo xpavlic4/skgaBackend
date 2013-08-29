@@ -57,7 +57,7 @@ public class CgfNamesUpdateJob {
         s.setDate(new Date());
         if (null == detail) {
             em.merge(s);
-            return i;
+            return ++i;
         }
         log.info("Updating with " + detail.toString());
         s.setDate(new Date());
