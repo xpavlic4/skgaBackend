@@ -33,7 +33,7 @@ public class CgfNumbersJob {
     @Inject
     WebsiteService service;
 
-    @Schedule(persistent = false, hour = "1", minute = "1", dayOfMonth = "1", month = "1,2,3,4,5,6,7,8,9,10,11")
+    @Schedule(persistent = false, hour = "1", minute = "1", dayOfMonth = "1", month = "2,4,6,8,10")
     public void deleteCgf() {
         Query query = em.createQuery("delete from LastSync m where m.type=:system");
         query.setParameter("system", Result.Type.CGF);
