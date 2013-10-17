@@ -143,9 +143,4 @@ variables for username, host and password:
     System.getenv("OPENSHIFT_DB_PASSWORD")  - DB Password
 
 To get a full list of environment variables, simply add a line in your
-<<<<<<< HEAD
 .openshift/action_hooks/build script that says "export" and push.
-.
-=======
-.openshift/action_hooks/build script that says "export" and push.
->>>>>>> a1567315b299b0e4612f62123ce395c80c808106
