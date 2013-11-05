@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/templates/default.xhtml"
+        >
+    <ui:define name="content">
+        <h1>SKGA handicap</h1>
+
+        <h:form id="reg">
+            <h2>Admin</h2>
+
+            <iframe src="https://www.facebook.com/plugins/like.php?href=skga-radim.rhcloud.com"
+                    scrolling="no" frameborder="0"
+                    style="border:none; width:450px; height:80px"></iframe>
+            <p>
+                <h:panelGrid columns="3">
+                    <h:commandButton id="numbersSkga" action="#{syncingBean.syncNumbers}" value="Check SKGA numbers"/>
+                    <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
+                                globalOnly="true"/>
+                </h:panelGrid>
+            </p>
+
+            <p>
+                <h:panelGrid columns="3">
+                    <h:commandButton id="numbersCgf" action="#{syncingBean.syncCgfNumbers}" value="Check CGF numbers"/>
+                    <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
+                                globalOnly="true"/>
+                </h:panelGrid>
+            </p>
+
+            <p>
+                <h:panelGrid columns="3">
+                    <h:commandButton id="names" action="#{syncingBean.syncNames}" value="Check names"/>
+                </h:panelGrid>
+            </p>
+
+            <p>
+                <h:panelGrid columns="3">
+                    <h:commandButton action="#{syncingBean.fixCgfNames}" value="Fix Cgf names with question mark"/>
+                </h:panelGrid>
+            </p>
+
+
+        </h:form>
+        <h:dataTable value="#{members}" var="i" rendered="#{not empty members}">
+            <h:column>
+                <f:facet name="header">Name</f:facet>
+                <h:outputText value="#{i.result.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">skgaNr</f:facet>
+                <h:outputText value="#{i.result.skgaNr}"/>
+            </h:column>
+
+        </h:dataTable>
+        <h:outputText value="No results" rendered="#{empty members}"/>
+
+
+    </ui:define>
+</ui:composition>
