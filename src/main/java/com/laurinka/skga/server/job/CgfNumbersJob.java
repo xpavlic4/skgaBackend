@@ -11,7 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.google.common.base.Optional;
 import com.laurinka.skga.server.model.CgfNumber;
+import com.laurinka.skga.server.model.Club;
 import com.laurinka.skga.server.model.LastSync;
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.Result.Type;
@@ -84,18 +86,40 @@ public class CgfNumbersJob {
             if (null == detail) {
                 continue;
             }
-            // if already in db -> skip
-            TypedQuery<CgfNumber> namedQuery = em.createNamedQuery(CgfNumber.BYNR, CgfNumber.class);
-            namedQuery.setParameter("nr", nr.asString());
-            List<CgfNumber> resultList = namedQuery.getResultList();
-            if (resultList.size() > 0) {
-                continue;
-            }
-            CgfNumber entity = new CgfNumber(nr.asString(), detail.getName());
-            entity.setName2(Utils.stripAccents(detail.getName()));
-            em.persist(entity);
-            log.info("New Cgf number: " + detail.toString());
+            final Optional<Club> club = createClubIfMissing(detail);
+            createCgfNumberIfMissing(nr, detail, club);
         }
         log.info("End");
+    }
+
+    private void createCgfNumberIfMissing(CgfGolferNumber nr, Result detail, Optional<Club> club) {
+        // if already in db -> skip
+        TypedQuery<CgfNumber> namedQuery = em.createNamedQuery(CgfNumber.BYNR, CgfNumber.class);
+        namedQuery.setParameter("nr", nr.asString());
+        List<CgfNumber> resultList = namedQuery.getResultList();
+        if (resultList.size() == 0) {
+            CgfNumber entity = new CgfNumber(nr.asString(), detail.getName());
+            entity.setName2(Utils.stripAccents(detail.getName()));
+            if (club.isPresent()) {
+                entity.setClub(club.get());
+            }
+            em.persist(entity);
+            log.info("New Cgf number: " + entity.toString());
+        }
+    }
+
+    private Optional<Club> createClubIfMissing(Result detail) {
+        TypedQuery<Club> namedQuery = em.createNamedQuery(Club.BYNAME, Club.class);
+        namedQuery.setParameter("name", detail.getClub());
+        final List<Club> resultList = namedQuery.getResultList();
+        if (resultList.size() == 0) {
+            final Club club = new Club();
+            club.setType(Type.CGF);
+            club.setName(detail.getName());
+            em.persist(club);
+            log.info("New Cgf club:" + club.toString() );
+            return Optional.of(club);
+        }
+        return Optional.absent();
     }
 }
