@@ -31,6 +31,8 @@ public class CgfNumber implements Serializable {
     @Basic(optional = true)
     private String name;
 
+    @ManyToOne
+    private Club club;
 
     @Basic(optional = true)
     private String name2;
@@ -89,4 +91,23 @@ public class CgfNumber implements Serializable {
         this.nr = nr;
     }
 
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
+    @Override
+    public String toString() {
+        return "CgfNumber{" +
+                "id=" + id +
+                ", date=" + date +
+                ", nr='" + nr + '\'' +
+                ", name='" + name + '\'' +
+                ", club=" + club +
+                ", name2='" + name2 + '\'' +
+                '}';
+    }
 }
