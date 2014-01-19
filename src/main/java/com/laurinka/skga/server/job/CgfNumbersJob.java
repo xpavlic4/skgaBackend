@@ -115,7 +115,7 @@ public class CgfNumbersJob {
         if (resultList.size() == 0) {
             final Club club = new Club();
             club.setType(Type.CGF);
-            club.setName(detail.getName());
+            club.setName(detail.getClub());
             em.persist(club);
             log.info("New Cgf club:" + club.toString() );
             return Optional.of(club);
