@@ -32,6 +32,7 @@ public class CgfNumber implements Serializable {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "club_id", nullable = true)
     private Club club;
 
     @Basic(optional = true)
