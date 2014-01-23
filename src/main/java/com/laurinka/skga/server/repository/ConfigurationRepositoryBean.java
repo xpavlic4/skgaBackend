@@ -31,6 +31,12 @@ public class ConfigurationRepositoryBean implements ConfigurationRepository {
         return Integer.parseInt(result.getValue());
     }
 
+    @Override
+    public boolean isFixNameJob() {
+        Configuration result = findConfiguration(Keys.FIX_NAME_JOB);
+        return Boolean.parseBoolean(result.getValue());
+    }
+
     @PostConstruct
     public void init() {
         Configuration result = findConfiguration(Keys.NEW_NUMBERS_OFFSET);
@@ -49,6 +55,14 @@ public class ConfigurationRepositoryBean implements ConfigurationRepository {
         e2.setValue("1");
         em.persist(e2);
         em.flush();
+
+        {
+            Configuration e3 = new Configuration();
+            e3.setName(Keys.FIX_NAME_JOB.name());
+            e3.setValue("true");
+            em.persist(e3);
+            em.flush();
+        }
     }
 
     private Configuration findConfiguration(Keys key) {

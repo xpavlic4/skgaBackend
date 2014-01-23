@@ -34,6 +34,9 @@ public class CgfNamesUpdateJob {
     @SuppressWarnings("UnusedDeclaration")
     @Schedule(persistent = false, hour = "*", minute = "*/5")
     public void fixNames() throws IOException {
+        if (!config.isFixNameJob()) {
+            log.info("Fix names job is disabled in configuration. Exiting!");
+        }
         TypedQuery<CgfNumber> questionQuery = em.createQuery(
                 "select m from CgfNumber m where m.name2 like '%\\?%'  order by m.date asc",
                 CgfNumber.class);
