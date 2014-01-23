@@ -6,7 +6,11 @@ public interface ConfigurationRepository {
         FIX_NAME_JOB;
     }
 
-    int getNumberOfNewSkgaNumbersToCheck();
+    /**
+     * Amount of numbers to check.
+     * @return number e.g. 30
+     */
+    int getNumberOfNewNumbersToCheck();
 
     int getNumberOfHoursToInvalidateCache();
 

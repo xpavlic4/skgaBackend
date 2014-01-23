@@ -55,7 +55,7 @@ public class SkgaNumbersJob {
     }
 
     private void checkFrom(SkgaGolferNumber from) throws IOException {
-        int numberOfNewSkgaNumbersToCheck = config.getNumberOfNewSkgaNumbersToCheck();
+        int numberOfNewSkgaNumbersToCheck = config.getNumberOfNewNumbersToCheck();
         log.info("Öffset ahead: " + numberOfNewSkgaNumbersToCheck);
         int tmpTo = from.asInt() + numberOfNewSkgaNumbersToCheck;
         checkRange(from, new SkgaGolferNumber(tmpTo));

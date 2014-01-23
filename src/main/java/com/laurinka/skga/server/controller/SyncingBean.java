@@ -36,6 +36,10 @@ public class SyncingBean {
         log.info("updating cgf numbers...end");
     }
 
+    /**
+     * Checks whether there are any SKGA numbers.
+     * @throws IOException
+     */
     public void syncSkgaNumbers() throws IOException {
         log.info("updating skga numbers...start");
         skgaNumbersJob.checkAnyNewNumbers();

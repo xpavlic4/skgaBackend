@@ -60,7 +60,7 @@ public class CgfNumbersJob {
     }
 
     private void checkFrom(CgfGolferNumber from) throws IOException {
-        int numberOfNewSkgaNumbersToCheck = config.getNumberOfNewSkgaNumbersToCheck();
+        int numberOfNewSkgaNumbersToCheck = config.getNumberOfNewNumbersToCheck();
         log.info("Öffset ahead: " + numberOfNewSkgaNumbersToCheck);
         int tmpTo = from.asInt() + numberOfNewSkgaNumbersToCheck;
         CgfGolferNumber aTo = new CgfGolferNumber(tmpTo);
@@ -82,7 +82,7 @@ public class CgfNumbersJob {
             CgfGolferNumber nr = new CgfGolferNumber(i);
 
             Result detail = service.findDetail(nr);
-            log.info("Checking " + nr.asString() + " ");
+            log.fine("Checking " + nr.asString() + " ");
             if (null == detail) {
                 continue;
             }
@@ -105,6 +105,16 @@ public class CgfNumbersJob {
             }
             em.persist(entity);
             log.info("New Cgf number: " + entity.toString());
+        }  else if (resultList.size() == 1) {
+            CgfNumber cgfNumber = resultList.iterator().next();
+            if (club.isPresent()) {
+                cgfNumber.setClub(club.get());
+                log.info("Updating " + nr.asString() + " with club " + club.get().toString()) ;
+            }
+            em.merge(cgfNumber);
+            em.flush();
+        } else {
+            log.warning("More than one result for cgf number " + nr.asString() + " (" + resultList.size() + ")");
         }
     }
 

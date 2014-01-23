@@ -20,7 +20,7 @@ public class ConfigurationRepositoryBean implements ConfigurationRepository {
     Logger log;
 
     @Override
-    public int getNumberOfNewSkgaNumbersToCheck() {
+    public int getNumberOfNewNumbersToCheck() {
         Configuration result = findConfiguration(Keys.NEW_NUMBERS_OFFSET);
         return Integer.parseInt(result.getValue());
     }
