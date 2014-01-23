@@ -16,6 +16,9 @@ import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.services.WebsiteService;
 import com.laurinka.skga.server.utils.Utils;
 
+/**
+ * Logic how SKGA numbers are scraped.
+ */
 @Stateless
 public class SkgaNumbersJob {
 
@@ -29,12 +32,17 @@ public class SkgaNumbersJob {
     @Inject
     WebsiteService service;
 
+    /**
+     * Checks whether there are any new skga numbers.
+     * <p/>
+     * New skga numbers are simply increment by one from the last known one.
+     */
     @Schedule(persistent = false)
-    public void updateNumbers() throws IOException {
+    public void checkAnyNewNumbers() throws IOException {
         Long maxId;
         Query maxQuery = em.createQuery("select max(m.id) from SkgaNumber m");
         maxId = (Long) maxQuery.getSingleResult();
-        if (maxId == null || maxId.longValue() == 0) {
+        if (maxId == null || maxId == 0) {
             log.info("No Skga Numbers, starting from 0!");
             checkFrom(new SkgaGolferNumber(0));
             return;
@@ -55,14 +63,14 @@ public class SkgaNumbersJob {
 
     private void checkRange(SkgaGolferNumber from, SkgaGolferNumber aTo) throws IOException {
         String s = from.asString();
-        log.info("Starting range: " + s + " - " + aTo.asString());
+        log.info("Checking range: " + s + " - " + aTo.asString());
         int start = from.asInt();
         start++;
         for (int i = start; i < aTo.asInt(); i++) {
             SkgaGolferNumber nr = new SkgaGolferNumber(i);
 
             Result detail = service.findDetail(nr);
-            log.info("Checking " + nr.asString() + " ");
+            log.fine("Checking " + nr.asString() + " ");
             if (null == detail) {
                 continue;
             }

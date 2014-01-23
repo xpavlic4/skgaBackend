@@ -16,7 +16,7 @@
                     style="border:none; width:450px; height:80px"></iframe>
             <p>
                 <h:panelGrid columns="3">
-                    <h:commandButton id="numbersSkga" action="#{syncingBean.syncNumbers}" value="Check SKGA numbers"/>
+                    <h:commandButton id="numbersSkga" action="#{syncingBean.syncSkgaNumbers}" value="Check SKGA numbers"/>
                     <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
                                 globalOnly="true"/>
                 </h:panelGrid>
@@ -27,12 +27,6 @@
                     <h:commandButton id="numbersCgf" action="#{syncingBean.syncCgfNumbers}" value="Check CGF numbers"/>
                     <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
                                 globalOnly="true"/>
-                </h:panelGrid>
-            </p>
-
-            <p>
-                <h:panelGrid columns="3">
-                    <h:commandButton id="names" action="#{syncingBean.syncNames}" value="Check names"/>
                 </h:panelGrid>
             </p>
 

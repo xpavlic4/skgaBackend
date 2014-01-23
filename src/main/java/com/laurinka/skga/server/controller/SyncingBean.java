@@ -2,15 +2,15 @@ package com.laurinka.skga.server.controller;
 
 import com.laurinka.skga.server.job.CgfNamesUpdateJob;
 import com.laurinka.skga.server.job.CgfNumbersJob;
-import com.laurinka.skga.server.job.NamesJob;
 import com.laurinka.skga.server.job.SkgaNumbersJob;
 import com.laurinka.skga.server.services.WebsiteService;
-import java.io.IOException;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 @Stateful
 @Model
@@ -20,8 +20,6 @@ public class SyncingBean {
     SkgaNumbersJob skgaNumbersJob;
     @Inject
     CgfNumbersJob cgfNumbersJob;
-    @Inject
-    NamesJob namesJob;
     @Inject
     CgfNamesUpdateJob cgfNamesUpdateJob;
 
@@ -38,21 +36,19 @@ public class SyncingBean {
         log.info("updating cgf numbers...end");
     }
 
-    public void syncNumbers() throws IOException {
-        log.info("updating numbers...start");
-        skgaNumbersJob.updateNumbers();
-        log.info("updating numbers...end");
+    public void syncSkgaNumbers() throws IOException {
+        log.info("updating skga numbers...start");
+        skgaNumbersJob.checkAnyNewNumbers();
+        log.info("updating skga numbers...end");
     }
 
-    public void syncNames() throws IOException {
-        log.info("updating names...start");
-        namesJob.updateNames();
-        log.info("updating names...end");
-    }
-
+    /**
+     * Run fixing job of cgf names with question mark.
+     * @throws IOException
+     */
     public void fixCgfNames() throws IOException {
         log.info("updating cgf names...start");
-        cgfNamesUpdateJob.fixNames();
+        cgfNamesUpdateJob.fixNamesWithQuestionMark();
         log.info("updating cgf names...end");
 
     }

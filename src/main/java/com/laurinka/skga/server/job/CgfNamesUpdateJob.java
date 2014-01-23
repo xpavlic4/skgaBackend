@@ -31,9 +31,14 @@ public class CgfNamesUpdateJob {
     @Inject
     WebsiteService service;
 
+    /**
+     * Selects names with question mark in names
+     * and tries to download them from source site again.
+     * @throws IOException
+     */
     @SuppressWarnings("UnusedDeclaration")
     @Schedule(persistent = false, hour = "*", minute = "*/5")
-    public void fixNames() throws IOException {
+    public void fixNamesWithQuestionMark() throws IOException {
         if (!config.isFixNameJob()) {
             log.info("Fix names job is disabled in configuration. Exiting!");
         }
