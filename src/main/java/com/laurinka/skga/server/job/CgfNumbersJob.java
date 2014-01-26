@@ -2,6 +2,7 @@ package com.laurinka.skga.server.job;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.Schedule;
@@ -97,6 +98,8 @@ public class CgfNumbersJob {
         TypedQuery<CgfNumber> namedQuery = em.createNamedQuery(CgfNumber.BYNR, CgfNumber.class);
         namedQuery.setParameter("nr", nr.asString());
         List<CgfNumber> resultList = namedQuery.getResultList();
+        log.log(Level.INFO, "Check club by name: (0)", nr.asString());
+        log.log(Level.INFO, "Number of results: {0}", resultList.size());
         if (resultList.size() == 0) {
             CgfNumber entity = new CgfNumber(nr.asString(), detail.getName());
             entity.setName2(Utils.stripAccents(detail.getName()));
@@ -122,6 +125,8 @@ public class CgfNumbersJob {
         TypedQuery<Club> namedQuery = em.createNamedQuery(Club.BYNAME, Club.class);
         namedQuery.setParameter("name", detail.getClub());
         final List<Club> resultList = namedQuery.getResultList();
+        log.log(Level.INFO, "Search club by name: {0}", detail.getClub());
+        log.log(Level.INFO, "Found results: {0}", resultList.size());
         if (resultList.size() == 0) {
             final Club club = new Club();
             club.setType(Type.CGF);
