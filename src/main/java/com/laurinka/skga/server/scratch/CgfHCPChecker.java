@@ -21,7 +21,7 @@ public class CgfHCPChecker {
 	public Result query(CgfGolferNumber nr) throws IOException {
 		String url = "http://www.cgf.cz/CheckHcp.aspx?MemberNumber=" + nr.asString()
 				;
-		final Connection connect = Jsoup.connect(url);
+		final Connection connect = Jsoup.connect(url).timeout(Constants.TIMEOUT_IN_SECONDS);
 		connect.header("Accept-Charset", "utf-8");
 		Document document = connect.get();
 		

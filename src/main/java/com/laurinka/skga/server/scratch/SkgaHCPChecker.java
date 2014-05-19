@@ -22,7 +22,7 @@ public class SkgaHCPChecker {
 		String url = "http://data.skga.sk/CheckHcp.aspx?MemberNumber=" + nr.asString()
 				+ "&button_dosearch=";
 //        Document document = Jsoup.parse(new URL(url).openStream(), "utf-8", url);
-		final Connection connect = Jsoup.connect(url).timeout(5000);
+		final Connection connect = Jsoup.connect(url).timeout(Constants.TIMEOUT_IN_SECONDS);
 		connect.header("Accept-Charset", "utf-8");
 		Document document = connect.get();
 		
