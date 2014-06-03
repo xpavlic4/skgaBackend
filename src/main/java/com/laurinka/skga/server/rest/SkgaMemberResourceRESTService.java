@@ -36,7 +36,7 @@ public class SkgaMemberResourceRESTService {
 
     @GET
     @Path("/{nr:[0-9][0-9]*}")
-    @Produces("text/xml")
+    @Produces({"application/xml", "application/json"})
     public Hcp lookupMemberById(@PathParam("nr") String aNr) {
         Result query;
         SkgaGolferNumber nr = new SkgaGolferNumber(aNr);

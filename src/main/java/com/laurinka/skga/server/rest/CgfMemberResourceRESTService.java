@@ -36,12 +36,11 @@ public class CgfMemberResourceRESTService {
 	private WebsiteService service;
 
     @Inject
-
     Logger log;
 
 	@GET
 	@Path("/{nr:[0-9][0-9]*}")
-	@Produces("text/xml")
+    @Produces({"application/xml", "application/json"})
 	public Hcp lookupMemberById(@PathParam("nr") String aNr) {
 		Result query ;
         CgfGolferNumber nr = new CgfGolferNumber(aNr);

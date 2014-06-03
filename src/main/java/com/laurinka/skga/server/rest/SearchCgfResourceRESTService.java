@@ -1,7 +1,6 @@
 package com.laurinka.skga.server.rest;
 
 import com.laurinka.skga.server.rest.model.NameNumberXml;
-import com.laurinka.skga.server.services.WebsiteService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -26,7 +25,7 @@ public class SearchCgfResourceRESTService extends AbstractMemberResourceRestServ
 
     @GET
     @Path("/search")
-    @Produces("text/xml")
+    @Produces({"application/xml", "application/json"})
     public List<NameNumberXml> lookupMemberByName(@QueryParam("q") String q) {
         String s = "select new com.laurinka.skga.server.rest.model.NameNumberXml(m.name2, m.nr) from CgfNumber m ";
         return getNameNumberXmls(q, s, em);
