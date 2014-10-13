@@ -2,5 +2,5 @@
 
 
 
-https://travis-ci.org/xpavlic4/skgaBackend.svg
+![travis](https://travis-ci.org/xpavlic4/skgaBackend.svg)
 
