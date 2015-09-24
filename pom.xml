@@ -173,7 +173,13 @@
             <artifactId>logentries-appender</artifactId>
             <version>RELEASE</version>
         </dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.5</version>
+        </dependency>
+
+    </dependencies>
 
 	<build>
 		<!-- Maven will append the version to the finalName (which is the name 

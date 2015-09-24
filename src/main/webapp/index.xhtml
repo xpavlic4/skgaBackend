@@ -19,13 +19,13 @@
             <p>
                 <h:inputText value="#{search.q}"/>
             </p>
-            <h:commandButton type="submit" value="Hledat" action="#{search.retrieveLastSnapshotsOrderedByName}"/>
+            <h:commandButton type="submit" value="Hledat" action="#{search.retrieveLastSnapshotsOrderedByName}" styleClass="btn btn-default"/>
 
 
             <h2>Výsledek hledání:</h2>
 
             <p>
-                <h:dataTable value="#{results}" var="i" rendered="#{not empty results}" border="1" cellspacing="1">
+                <h:dataTable value="#{results}" var="i" rendered="#{not empty results}" border="1" cellspacing="1" styleClass="table">
                     <h:column>
                         <f:facet name="header">Jméno</f:facet>
                         <h:outputText value="#{i.result.name}"/>
