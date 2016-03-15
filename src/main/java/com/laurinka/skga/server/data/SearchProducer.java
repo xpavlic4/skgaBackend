@@ -1,5 +1,19 @@
 package com.laurinka.skga.server.data;
 
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.ws.rs.WebApplicationException;
+
 import com.laurinka.skga.server.model.Result;
 import com.laurinka.skga.server.model.Snapshot;
 import com.laurinka.skga.server.rest.CgfMemberResourceRESTService;
@@ -12,19 +26,6 @@ import com.laurinka.skga.server.scratch.CgfGolferNumber;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
 import com.laurinka.skga.server.services.WebsiteService;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.ws.rs.WebApplicationException;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
 @RequestScoped
 @Named("search")
 public class SearchProducer {
@@ -34,8 +35,8 @@ public class SearchProducer {
     private EntityManager em;
     @Inject
     private WebsiteService service;
-    @Inject
-    Logger log;
+
+    Logger log = Logger.getLogger(SearchProducer.class.getName());;
 
     @Inject
     SkgaMemberResourceRESTService skga;
