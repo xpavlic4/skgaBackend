@@ -30,7 +30,7 @@ public class CgfCheckerTest {
 	
 	@Test
 	public void testCharset() throws IOException {
-		Result r  = new CgfHCPChecker().query(new CgfGolferNumber(950944));
+		Result r  = new CgfHCPChecker().query(new CgfGolferNumber(985311));
 		System.out.println(r);
 		String s = Normalizer.normalize(r.getName(), Normalizer.Form.NFD);
 		s = s.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
