@@ -123,14 +123,15 @@ public class CgfNumbersJob {
 
     private Optional<Club> createClubIfMissing(Result detail) {
         TypedQuery<Club> namedQuery = em.createNamedQuery(Club.BYNAME, Club.class);
-        namedQuery.setParameter("name", detail.getClub());
+        final String clubWithoutAccents = Utils.stripAccents(detail.getClub());
+        namedQuery.setParameter("name", clubWithoutAccents);
         final List<Club> resultList = namedQuery.getResultList();
-        log.log(Level.INFO, "Search club by name: {0}", detail.getClub());
+        log.log(Level.INFO, "Search club by name: {0}", clubWithoutAccents);
         log.log(Level.INFO, "Found results: {0}", resultList.size());
         if (resultList.size() == 0) {
             final Club club = new Club();
             club.setType(Type.CGF);
-            club.setName(detail.getClub());
+            club.setName(clubWithoutAccents);
             em.persist(club);
             log.info("New Cgf club:" + club.toString() );
             return Optional.of(club);
