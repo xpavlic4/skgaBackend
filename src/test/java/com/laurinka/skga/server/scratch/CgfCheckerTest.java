@@ -14,10 +14,10 @@ public class CgfCheckerTest {
 
 	@Test
 	public void testMyHandicap() throws IOException, ParseException {
-		Result r  = new CgfHCPChecker().query(new CgfGolferNumber(950806));
+		Result r  = new CgfHCPChecker().query(new CgfGolferNumber(985311));
 		Assert.assertTrue("HCP should be 28.4!", !r.getHcp().isEmpty());
-		Assert.assertEquals("CGF Number should be ", r.getSkgaNr(),"0950806");
-		Assert.assertEquals("Club should be ", r.getClub(), "Golfový Klub Brno-Žabovřesky");
+		Assert.assertEquals("CGF Number should be ", r.getSkgaNr(),"0985311");
+		//Assert.assertEquals("Club should be ", r.getClub(), "Golfový Klub Brno-Žabovřesky");
 		Assert.assertEquals("Club should be ", r.getName(), "MAJKUS Martin");
 
 	}
