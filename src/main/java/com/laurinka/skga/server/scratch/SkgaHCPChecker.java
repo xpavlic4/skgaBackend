@@ -1,5 +1,6 @@
 package com.laurinka.skga.server.scratch;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -24,7 +25,13 @@ public class SkgaHCPChecker {
 //        Document document = Jsoup.parse(new URL(url).openStream(), "utf-8", url);
 		final Connection connect = Jsoup.connect(url).timeout(Constants.TIMEOUT_IN_SECONDS);
 		connect.header("Accept-Charset", "utf-8");
-		Document document = connect.get();
+
+		Document document = null;
+		try {
+			document = connect.get();
+		} catch (SocketTimeoutException ste) {
+			return null;
+		}
 		
 		
 		if (!isValid(document))
