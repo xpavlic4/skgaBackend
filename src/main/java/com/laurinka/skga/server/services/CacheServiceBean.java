@@ -19,14 +19,14 @@ import org.joda.time.DateTime;
 import com.google.common.base.Optional;
 import com.laurinka.skga.server.scratch.CgfGolferNumber;
 import com.laurinka.skga.server.scratch.SkgaGolferNumber;
-
+@SuppressWarnings("WeakerAccess")
 @Singleton
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 public class CacheServiceBean implements CacheService {
+
+
     @Inject
     EntityManager em;
-    @Inject
-    Logger log;
     @Inject
     ConfigurationRepository config;
 

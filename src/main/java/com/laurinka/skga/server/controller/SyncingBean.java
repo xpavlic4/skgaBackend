@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 
+@SuppressWarnings("WeakerAccess")
 @Stateful
 @Model
 public class SyncingBean {
@@ -23,8 +24,6 @@ public class SyncingBean {
     @Inject
     CgfNamesUpdateJob cgfNamesUpdateJob;
 
-    @Inject
-    EntityManager em;
     @Inject
     private Logger log;
     @Inject
@@ -38,7 +37,6 @@ public class SyncingBean {
 
     /**
      * Checks whether there are any SKGA numbers.
-     * @throws IOException
      */
     public void syncSkgaNumbers() throws IOException {
         log.info("updating skga numbers...start");
@@ -48,7 +46,6 @@ public class SyncingBean {
 
     /**
      * Run fixing job of cgf names with question mark.
-     * @throws IOException
      */
     public void fixCgfNames() throws IOException {
         log.info("updating cgf names...start");
