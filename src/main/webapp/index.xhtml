@@ -16,10 +16,14 @@
         </h:form>
         </div>
         <h:form id="search">
-            <p>
-                <h:inputText value="#{search.q}"/>
-            </p>
+            <h:outputText value="Žádné záznamy" rendered="#{empty results}"/>
+            <h:panelGrid rendered="#{not empty results}">
+            <div class="form-group">
+                <label for="query">Jmeno:</label>
+                <h:inputText value="#{search.q}" class="form-control" id="query"/>
+            </div>
             <h:commandButton type="submit" value="Hledat" action="#{search.retrieveLastSnapshotsOrderedByName}" styleClass="btn btn-default"/>
+
 
 
             <h2>Výsledek hledání:</h2>
@@ -43,8 +47,9 @@
                         <h:outputText value="#{i.result.hcp}"/>
                     </h:column>
                 </h:dataTable>
-                <h:outputText value="Žádné záznamy" rendered="#{empty results}"/>
+
             </p>
+            </h:panelGrid>
         </h:form>
     </ui:define>
 </ui:composition>
