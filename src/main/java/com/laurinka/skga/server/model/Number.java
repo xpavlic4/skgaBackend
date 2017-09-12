@@ -9,12 +9,11 @@ import java.util.Date;
 @XmlRootElement
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "nr"))
 @NamedQueries({
-        @NamedQuery(name = CgfNumber.BYNR, query = "select s from CgfNumber s where s.nr = :nr")}
+        @NamedQuery(name = Number.BYNR, query = "select s from Number s where s.nr = :nr")}
 )
+public class Number implements Serializable {
+    public static final String BYNR = "Number.byNr";
 
-public class CgfNumber implements Serializable {
-
-    public static final String BYNR = "cgfnumber.bynr";
     @Id
     @GeneratedValue
     private Long id;
@@ -32,25 +31,20 @@ public class CgfNumber implements Serializable {
     private String name;
 
 
-    @Basic(optional = true)
-    private String name2;
-    
-    public String getName2() {
-		return name2;
-	}
-
-	public void setName2(String name2) {
-		this.name2 = name2;
-	}
-
-	public CgfNumber() {
+	public Number() {
     }
 
-    public CgfNumber(String nr, String aname) {
+    public Number(String nr, String aname) {
         this.nr = nr;
         this.name = aname;
         date = new Date();
     }
+
+    @PrePersist
+    public void init() {
+        setDate(new Date());
+    }
+
 
     public String getName() {
         return name;
@@ -66,11 +60,6 @@ public class CgfNumber implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @PrePersist
-    public void init() {
-        setDate(new Date());
     }
 
     public Long getId() {

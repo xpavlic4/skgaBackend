@@ -1,6 +1,5 @@
 package com.laurinka.skga.server.controller;
 
-import com.laurinka.skga.server.job.CgfNamesUpdateJob;
 import com.laurinka.skga.server.job.CgfNumbersJob;
 import com.laurinka.skga.server.job.SkgaNumbersJob;
 import com.laurinka.skga.server.services.WebsiteService;
@@ -8,7 +7,6 @@ import com.laurinka.skga.server.services.WebsiteService;
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 
@@ -21,8 +19,6 @@ public class SyncingBean {
     SkgaNumbersJob skgaNumbersJob;
     @Inject
     CgfNumbersJob cgfNumbersJob;
-    @Inject
-    CgfNamesUpdateJob cgfNamesUpdateJob;
 
     @Inject
     private Logger log;
@@ -44,14 +40,5 @@ public class SyncingBean {
         log.info("updating skga numbers...end");
     }
 
-    /**
-     * Run fixing job of cgf names with question mark.
-     */
-    public void fixCgfNames() throws IOException {
-        log.info("updating cgf names...start");
-        cgfNamesUpdateJob.fixNamesWithQuestionMark();
-        log.info("updating cgf names...end");
-
-    }
 
 }

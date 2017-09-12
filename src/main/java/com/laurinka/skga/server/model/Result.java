@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 @Embeddable
 public class Result {
     public enum Type {
-        SKGA, CGF;
+        SKGA, CGF
     }
 
     public Result() {

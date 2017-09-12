@@ -2,8 +2,7 @@ package com.laurinka.skga.server.repository;
 
 public interface ConfigurationRepository {
     enum Keys {
-        NEW_NUMBERS_OFFSET, NUMBER_OF_HOURS_TO_INVALIDATE_CACHE,
-        FIX_NAME_JOB;
+        NEW_NUMBERS_OFFSET, NUMBER_OF_HOURS_TO_INVALIDATE_CACHE
     }
 
     /**
@@ -14,10 +13,4 @@ public interface ConfigurationRepository {
 
     int getNumberOfHoursToInvalidateCache();
 
-    /**
-     * Flag whether scheduling of this job should be enabled or disabled.
-     *
-     * @return true for enabled, false for disabled
-     */
-    boolean isFixNameJob();
 }
