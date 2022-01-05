@@ -1,11 +1,13 @@
 package com.laurinka.skga.server.rest;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+
 
 /**
  * Just for testing and smoke tests.
@@ -13,7 +15,7 @@ import javax.ws.rs.Path;
 @Path("/test")
 @RequestScoped
 public class TestRESTService extends AbstractMemberResourceRestService {
-    private static Logger log = LogManager.getRootLogger();
+    private static final Logger log = LogManager.getRootLogger();
 
     @GET
     @Path("/log")
